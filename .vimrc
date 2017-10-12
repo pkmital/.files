@@ -18,6 +18,7 @@ if has('unix')
 endif
 
 let NERDTreeIgnore=['\.pyc$',  '\.o$', '^__pycache__$', '.*\.js$', '.*\.map$', 'node_modules', '\.git$', '\.svn$']
+nnoremap <Leader>n :NERDTreeFind<CR>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 "
 " Use silver surfer for grep
@@ -130,10 +131,8 @@ inoremap jj <Esc>
 " let g:gitgutter_sign_column_always = 0
 
 " Toggle gutter shit
-nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>
-nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>
-nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>
-nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>
+nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:IndentLinesToggle<CR>
+nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>
 
 " Tab/Indents
 " set autoindent
@@ -188,7 +187,7 @@ nnoremap <Leader>z :Goyo<CR>i<Esc>`^
 
 " Documentation
 "let g:pymode_doc = 1
-let g:pymode_doc_key = 'K'
+let g:pymode_doc_key = 'D'
 
 " Linting
 " let g:pymode_lint = 1
@@ -305,7 +304,8 @@ if has("autocmd")
 endif
 
 " Retab 2 -> 4
-nnoremap <leader>t <ESC>:set ts=2 noet | retab! | set et ts=4 | retab
+nnoremap <leader>t <ESC>:set ts=2 noet<CR>:retab!<CR>:set et ts=4<CR>:retab<CR>
+vnoremap <leader>t <ESC>:set ts=2 noet<CR>:'<,'>retab!<CR>:set et ts=4<CR>:'<,'>retab<CR>
 
 " Turn off automatic visual selection w/ mouse
 set mouse-=a
@@ -318,6 +318,7 @@ vnoremap u :noh<cr>
 
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" vnoremap K :grep! "<C-R>"" %<CR>
 
 " bind \ (backward slash) to grep shortcut
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
