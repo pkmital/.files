@@ -2,7 +2,7 @@ set foldnestmax=1
 set foldmethod=syntax
 " Tab/Indents
 set autoindent
-set ts=4
+set ts=2
 set expandtab
-set shiftwidth=4
+set shiftwidth=2
 "set cursorline

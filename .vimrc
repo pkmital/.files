@@ -17,13 +17,25 @@ if has('unix')
   endif
 endif
 
+let NERDTreeIgnore=['\.pyc$',  '\.o$', '^__pycache__$', '.*\.js$', '.*\.map$', 'node_modules', '\.git$', '\.svn$']
+nnoremap <Leader>n :NERDTreeFind<CR>
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
+"
+" Use silver surfer for grep
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  " let g:ctrlp_use_caching = 0
+endif
+
 " add ctrlp.vim setting
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-if executable('ag')
-      let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  endif
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
-let g:ctrlp_custom_ignore = 'tmp$\|\.git$\|\.hg$\|\.svn$\|.rvm$|.bundle$\|vendor'
+"let g:ctrlp_custom_ignore = 'tmp$\|\.git$\|\.hg$\|\.svn$\|.rvm$|.bundle$\|vendor'
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window_bottom=1
 let g:ctrlp_max_height=25
@@ -31,7 +43,14 @@ let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
 let g:ctrlp_clear_cache_on_exit=0
-"
+let g:ctrlp_custom_ignore = {
+ \ 'git': '.git/', 
+ \ 'gitignore': 'git --git-dir=%s/.git ls-files -oc --exclude-standard',
+ \ 'dir':  '\v[\/]\.(git|hg|svn|rvm|bundle|vendor|tmp)$',
+ \ 'file': '\v\.(exe|so|dll)$',
+ \ 'images': '\v\.(jpg|JPG|JPEG|jpeg|gif|png|bmp)$',
+ \ 'web': 'node_modules'
+ \ }
 " Use py matcher for performance
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
@@ -112,16 +131,14 @@ inoremap jj <Esc>
 " let g:gitgutter_sign_column_always = 0
 
 " Toggle gutter shit
-nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>
-nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>
-nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>
-nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>
+nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:IndentLinesToggle<CR>
+nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>
 
 " Tab/Indents
-set autoindent
-set ts=4
-set expandtab
-set shiftwidth=4
+" set autoindent
+" set ts=4
+" set expandtab
+" set shiftwidth=4
 "set cursorline
 
 " Clear highlighting on ESC in normal
@@ -170,7 +187,7 @@ nnoremap <Leader>z :Goyo<CR>i<Esc>`^
 
 " Documentation
 "let g:pymode_doc = 1
-let g:pymode_doc_key = 'K'
+let g:pymode_doc_key = 'D'
 
 " Linting
 " let g:pymode_lint = 1
@@ -287,7 +304,8 @@ if has("autocmd")
 endif
 
 " Retab 2 -> 4
-nnoremap <leader>t <ESC>:set ts=2 noet | retab! | set et ts=4 | retab
+nnoremap <leader>t <ESC>:set ts=2 noet<CR>:retab!<CR>:set et ts=4<CR>:retab<CR>
+vnoremap <leader>t <ESC>:set ts=2 noet<CR>:'<,'>retab!<CR>:set et ts=4<CR>:'<,'>retab<CR>
 
 " Turn off automatic visual selection w/ mouse
 set mouse-=a
@@ -298,23 +316,20 @@ set timeoutlen=1000 ttimeoutlen=0
 " Tired of lowercasing stuff by mistake
 vnoremap u :noh<cr>
 
-" Use silver surfer for grep
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" vnoremap K :grep! "<C-R>"" %<CR>
 
 " bind \ (backward slash) to grep shortcut
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
 nnoremap \ :Ag<SPACE>
 
+"let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_start_level = 2
+"let g:indent_guides_guide_size = 1
+"hi IndentGuidesOdd  ctermbg=grey
+"hi IndentGuidesEven ctermbg=darkgrey
+let g:indentLine_char = '┆'
+"'▏'
+"'︳'
