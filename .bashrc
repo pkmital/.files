@@ -128,7 +128,7 @@ test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shel
 set show-mode-in-prompt on
 
 # Anaconda
-export PATH="/etc/anaconda/3/bin:$PATH"
+export PATH="/opt/conda/bin:$PATH"
 export PATH=$PATH:/usr/local/cuda/bin:/usr/local/bin
 export MPLBACKEND=Agg
 export DISPLAY=:0

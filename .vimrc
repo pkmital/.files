@@ -264,7 +264,7 @@ autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
-let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+let g:ycm_python_binary_path = '/opt/conda/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
 
 " Redraw hacks to force refresh
