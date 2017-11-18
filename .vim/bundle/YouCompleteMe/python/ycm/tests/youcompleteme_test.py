@@ -28,11 +28,14 @@ MockVimModule()
 
 import os
 import sys
-from hamcrest import ( assert_that, contains, empty, is_in, is_not, has_length,
+from hamcrest import ( assert_that, contains, empty, equal_to, is_in, is_not,
                        matches_regexp )
 from mock import call, MagicMock, patch
 
-from ycm.tests import StopServer, test_utils, YouCompleteMeInstance
+from ycm.paths import _PathToPythonUsedDuringBuild
+from ycm.youcompleteme import YouCompleteMe
+from ycm.tests import ( MakeUserOptions, StopServer, test_utils,
+                        WaitUntilReady, YouCompleteMeInstance )
 from ycm.client.base_request import _LoadExtraConfFile
 from ycmd.responses import ServerError
 
@@ -40,6 +43,60 @@ from ycmd.responses import ServerError
 @YouCompleteMeInstance()
 def YouCompleteMe_YcmCoreNotImported_test( ycm ):
   assert_that( 'ycm_core', is_not( is_in( sys.modules ) ) )
+
+
+@patch( 'ycm.vimsupport.PostVimMessage' )
+def YouCompleteMe_InvalidPythonInterpreterPath_test( post_vim_message ):
+  try:
+    with patch( 'ycm.tests.test_utils.server_python_interpreter',
+                '/invalid/path/to/python' ):
+      ycm = YouCompleteMe( MakeUserOptions() )
+      assert_that( ycm.IsServerAlive(), equal_to( False ) )
+      post_vim_message.assert_called_once_with(
+        "Unable to start the ycmd server. "
+        "Path in 'g:ycm_server_python_interpreter' option does not point "
+        "to a valid Python 2.6+ or 3.3+. "
+        "Correct the error then restart the server with ':YcmRestartServer'." )
+
+    post_vim_message.reset_mock()
+
+    with patch( 'ycm.tests.test_utils.server_python_interpreter',
+                _PathToPythonUsedDuringBuild() ):
+      ycm.RestartServer()
+
+    assert_that( ycm.IsServerAlive(), equal_to( True ) )
+    post_vim_message.assert_called_once_with( 'Restarting ycmd server...' )
+  finally:
+    WaitUntilReady()
+    StopServer( ycm )
+
+
+@patch( 'ycmd.utils.PathToFirstExistingExecutable', return_value = None )
+@patch( 'ycm.paths._EndsWithPython', return_value = False )
+@patch( 'ycm.vimsupport.PostVimMessage' )
+def YouCompleteMe_NoPythonInterpreterFound_test( post_vim_message, *args ):
+  try:
+    with patch( 'ycmd.utils.ReadFile', side_effect = IOError ):
+
+      ycm = YouCompleteMe( MakeUserOptions() )
+      assert_that( ycm.IsServerAlive(), equal_to( False ) )
+      post_vim_message.assert_called_once_with(
+        "Unable to start the ycmd server. Cannot find Python 2.6+ or 3.3+. "
+        "Set the 'g:ycm_server_python_interpreter' option to a Python "
+        "interpreter path. "
+        "Correct the error then restart the server with ':YcmRestartServer'." )
+
+    post_vim_message.reset_mock()
+
+    with patch( 'ycm.tests.test_utils.server_python_interpreter',
+                _PathToPythonUsedDuringBuild() ):
+      ycm.RestartServer()
+
+    assert_that( ycm.IsServerAlive(), equal_to( True ) )
+    post_vim_message.assert_called_once_with( 'Restarting ycmd server...' )
+  finally:
+    WaitUntilReady()
+    StopServer( ycm )
 
 
 @YouCompleteMeInstance()
@@ -50,28 +107,22 @@ def RunNotifyUserIfServerCrashed( ycm, test, post_vim_message ):
   ycm._logger = MagicMock( autospec = True )
   ycm._server_popen = MagicMock( autospec = True )
   ycm._server_popen.poll.return_value = test[ 'return_code' ]
-  ycm._server_popen.stderr.read.return_value = test[ 'stderr_output' ]
 
-  ycm._NotifyUserIfServerCrashed()
+  ycm.OnFileReadyToParse()
 
-  assert_that( ycm._logger.method_calls,
-               has_length( len( test[ 'expected_logs' ] ) ) )
-  ycm._logger.error.assert_has_calls(
-    [ call( log ) for log in test[ 'expected_logs' ] ] )
-  post_vim_message.assert_has_exact_calls( [
-    call( test[ 'expected_vim_message' ] )
-  ] )
+  assert_that( ycm._logger.error.call_args[ 0 ][ 0 ],
+               test[ 'expected_message' ] )
+  assert_that( post_vim_message.call_args[ 0 ][ 0 ],
+               test[ 'expected_message' ] )
 
 
 def YouCompleteMe_NotifyUserIfServerCrashed_UnexpectedCore_test():
-  message = ( "The ycmd server SHUT DOWN (restart with ':YcmRestartServer'). "
-              "Unexpected error while loading the YCM core library. "
-              "Use the ':YcmToggleLogs' command to check the logs." )
+  message = ( "The ycmd server SHUT DOWN \(restart with ':YcmRestartServer'\). "
+              "Unexpected error while loading the YCM core library. Type "
+              "':YcmToggleLogs ycmd_\d+_stderr_.+.log' to check the logs." )
   RunNotifyUserIfServerCrashed( {
     'return_code': 3,
-    'stderr_output' : '',
-    'expected_logs': [ message ],
-    'expected_vim_message': message
+    'expected_message': matches_regexp( message )
   } )
 
 
@@ -81,9 +132,7 @@ def YouCompleteMe_NotifyUserIfServerCrashed_MissingCore_test():
               "using it. Follow the instructions in the documentation." )
   RunNotifyUserIfServerCrashed( {
     'return_code': 4,
-    'stderr_output': '',
-    'expected_logs': [ message ],
-    'expected_vim_message': message
+    'expected_message': equal_to( message )
   } )
 
 
@@ -94,9 +143,7 @@ def YouCompleteMe_NotifyUserIfServerCrashed_Python2Core_test():
               "interpreter path." )
   RunNotifyUserIfServerCrashed( {
     'return_code': 5,
-    'stderr_output': '',
-    'expected_logs': [ message ],
-    'expected_vim_message': message
+    'expected_message': equal_to( message )
   } )
 
 
@@ -107,9 +154,7 @@ def YouCompleteMe_NotifyUserIfServerCrashed_Python3Core_test():
               "interpreter path." )
   RunNotifyUserIfServerCrashed( {
     'return_code': 6,
-    'stderr_output': '',
-    'expected_logs': [ message ],
-    'expected_vim_message': message
+    'expected_message': equal_to( message )
   } )
 
 
@@ -119,24 +164,17 @@ def YouCompleteMe_NotifyUserIfServerCrashed_OutdatedCore_test():
               "install.py script. See the documentation for more details." )
   RunNotifyUserIfServerCrashed( {
     'return_code': 7,
-    'stderr_output': '',
-    'expected_logs': [ message ],
-    'expected_vim_message': message
+    'expected_message': equal_to( message )
   } )
 
 
 def YouCompleteMe_NotifyUserIfServerCrashed_UnexpectedExitCode_test():
-  message = ( "The ycmd server SHUT DOWN (restart with ':YcmRestartServer'). "
-              "Unexpected exit code 1. Use the ':YcmToggleLogs' command to "
-              "check the logs." )
+  message = ( "The ycmd server SHUT DOWN \(restart with ':YcmRestartServer'\). "
+              "Unexpected exit code 1. Type "
+              "':YcmToggleLogs ycmd_\d+_stderr_.+.log' to check the logs." )
   RunNotifyUserIfServerCrashed( {
     'return_code': 1,
-    'stderr_output': 'First line\r\n'
-                     'Second line',
-    'expected_logs': [ 'First line\n'
-                       'Second line',
-                       message ],
-    'expected_vim_message': message
+    'expected_message': matches_regexp( message )
   } )
 
 
@@ -288,7 +326,6 @@ def YouCompleteMe_GetDefinedSubcommands_ErrorFromServer_test( ycm,
     call( 'Server error', truncate = False )
   ] )
   assert_that( result, empty() )
-
 
 
 @YouCompleteMeInstance()
@@ -514,6 +551,11 @@ def YouCompleteMe_UpdateDiagnosticInterface_PrioritizeErrorsOverWarnings_test(
       ycm.OnFileReadyToParse()
       ycm.HandleFileParseRequest( block = True )
 
+    # The error on the current line is echoed, not the warning.
+    post_vim_message.assert_called_once_with(
+      "expected ';' after expression (FixIt)",
+      truncate = True, warning = False )
+
     # Error match is added after warning matches.
     assert_that(
       test_utils.VIM_MATCHES,
@@ -526,17 +568,44 @@ def YouCompleteMe_UpdateDiagnosticInterface_PrioritizeErrorsOverWarnings_test(
 
     # Only the error sign is placed.
     vim_command.assert_has_exact_calls( [
-      call( 'sign define ycm_dummy_sign' ),
-      call( 'sign place 3 name=ycm_dummy_sign line=3 buffer=5' ),
       call( 'sign place 1 name=YcmError line=3 buffer=5' ),
-      call( 'sign undefine ycm_dummy_sign' ),
-      call( 'sign unplace 3 buffer=5' )
     ] )
 
-    # When moving the cursor on the diagnostics, the error is displayed to the
-    # user, not the warning.
+  # The error is not echoed again when moving the cursor along the line.
+  with MockVimBuffers( [ current_buffer ], current_buffer, ( 3, 2 ) ):
+    post_vim_message.reset_mock()
     ycm.OnCursorMoved()
-    post_vim_message.assert_has_exact_calls( [
-      call( "expected ';' after expression (FixIt)",
-            truncate = True, warning = False )
+    post_vim_message.assert_not_called()
+
+  # The error is cleared when moving the cursor to another line.
+  with MockVimBuffers( [ current_buffer ], current_buffer, ( 2, 2 ) ):
+    post_vim_message.reset_mock()
+    ycm.OnCursorMoved()
+    post_vim_message.assert_called_once_with( "", warning = False )
+
+  # The error is echoed when moving the cursor back.
+  with MockVimBuffers( [ current_buffer ], current_buffer, ( 3, 2 ) ):
+    post_vim_message.reset_mock()
+    ycm.OnCursorMoved()
+    post_vim_message.assert_called_once_with(
+      "expected ';' after expression (FixIt)",
+      truncate = True, warning = False )
+
+    vim_command.reset_mock()
+    with patch( 'ycm.client.event_notification.EventNotification.Response',
+                return_value = diagnostics[ 1 : ] ):
+      ycm.OnFileReadyToParse()
+      ycm.HandleFileParseRequest( block = True )
+
+    assert_that(
+      test_utils.VIM_MATCHES,
+      contains(
+        VimMatch( 'YcmWarningSection', '\%3l\%5c\_.\{-}\%3l\%7c' ),
+        VimMatch( 'YcmWarningSection', '\%3l\%3c\_.\{-}\%3l\%9c' )
+      )
+    )
+
+    vim_command.assert_has_exact_calls( [
+      call( 'sign place 2 name=YcmWarning line=3 buffer=5' ),
+      call( 'try | exec "sign unplace 1 buffer=5" | catch /E158/ | endtry' )
     ] )

@@ -98,9 +98,6 @@ let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 1
 set previewheight=25
 
-" " PyMode PEP 8
-" nnoremap <leader>l :PymodeLint<CR>
-" nnoremap <leader>L :PymodeLintAuto<CR>
 
 " Folding for Python; should move this to ftplugin
 nnoremap <space> za
@@ -142,7 +139,8 @@ nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>
 "set cursorline
 
 " Clear highlighting on ESC in normal
-nnoremap <esc> :noh<return>:SyntasticReset<return><esc>
+" nnoremap <esc> :noh<return>:SyntasticReset<return>:ALEReset<return>:cclose<return><esc>
+nnoremap <esc> :noh<return>:ALEReset<return>:cclose<return><esc>
 nnoremap <esc>^[ <esc>^[
 
 " Seems criminal but...
@@ -172,12 +170,6 @@ au BufRead *.mdown setlocal spell
 
 " Python highlighting
 let g:python_highlight_all = 1
-let g:pymode_syntax = 1
-let g:pymode_syntax_all = 1
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-let g:pymode_syntax_space_errors = g:pymode_syntax_all
-let g:pymode_rope = 0
-let g:pymode_lint_signs = 1
 
 " Goyo Distraction free editing
 let g:goyo_height = '100%'
@@ -190,11 +182,20 @@ nnoremap <Leader>z :Goyo<CR>i<Esc>`^
 let g:pymode_doc_key = 'D'
 
 " Linting
-" let g:pymode_lint = 1
-" let g:pymode_lint_checker = "pyflakes,pep8"
-" let g:pymode_options_max_line_length = 90
+let g:pymode_lint = 1
+let g:pymode_lint_checker = "pyflakes,pep8"
+let g:pymode_options_max_line_length = 90
 " Auto check on save
 "let g:pymode_lint_write = 1
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+let g:pymode_rope = 0
+let g:pymode_lint_signs = 1
+let g:pymode_python = 'python3'
+ nnoremap <leader>l :PymodeLint<CR>
+" nnoremap <leader>L :PymodeLintAuto<CR>
 
 
 " Syntax
@@ -216,16 +217,35 @@ set fillchars=vert:│    " that's a vertical box-drawing character
 " UTF-8
 set encoding=utf-8
 
+" ALE
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_python_pycodestyle_options = '--max-line-length 90'
+let g:ale_linters = {
+\   'python': ['autopep8', 'pyflakes', 'pycodestyle', 'isort', 'pylint', 'yapf']
+\}
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_open_list = 1
+let g:ale_keep_list_window_open = 0
+let g:ale_lint_on_text_changed = 'never'
+" if you don't want linters to run on opening a file
+" let g:ale_lint_on_enter = 0<Paste>
+
+
 " Syntastic Error/Warn
-let g:syntastic_python_checkers = ['python', 'pyflakes', 'flake8']
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-nnoremap <leader>r :SyntasticReset<CR>
+" let g:syntastic_python_checkers = ['python', 'flake8']
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_aggregate_errors = 1
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_python_ignore_errors = ['E501']
+" nnoremap <leader>r :SyntasticReset<CR>
 
 " Javascript
 let g:javascript_plugin_jsdoc = 1
@@ -281,12 +301,13 @@ autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
-let g:ycm_python_binary_path = '/opt/conda/bin/python'
+let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
 
 " Redraw hacks to force refresh
 set ttyfast
 set lazyredraw
+
 " These didn't seem to help w/ my issues w/ markdown + tmux
 " au FileWritePost * :redraw!
 " au TermResponse * :redraw!
@@ -333,3 +354,16 @@ nnoremap \ :Ag<SPACE>
 let g:indentLine_char = '┆'
 "'▏'
 "'︳'
+"
+" Lightline ALE
+let g:lightline.component_expand = {
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \ }
+let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+
