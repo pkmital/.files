@@ -101,7 +101,7 @@ nnoremap <space> za
 vnoremap <space> zf
 
 " YAPF
-nnoremap <leader>L :call Yapf("--style google")<CR>
+nnoremap <leader>L :call ALEFix<CR>
 
 " Line Numbers
 set nu
@@ -192,10 +192,14 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_python_pycodestyle_options = '--max-line-length 90'
 let g:ale_linters = {
-\   'python': ['autopep8', 'pyflakes', 'pycodestyle', 'isort', 'yapf']
+\   'python': ['flake8', 'pycodestyle']
 \}
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'python': ['autopep8', 'isort', 'yapf'],
+\}
+let g:ale_python_flake8_executable = 'python3'
+let g:ale_python_flake8_args = '-m flake8 --ignore E501'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
 let g:ale_lint_on_save = 1
@@ -272,7 +276,8 @@ autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
-let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+" let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+let g:ycm_python_binary_path = '/usr/bin/python3'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
 
 " Redraw hacks to force refresh
@@ -317,15 +322,31 @@ let g:indentLine_char = '┆'
 "'▏'
 "'︳'
 "
-" Lightline ALE
+"  " Lightline ALE
+"  let g:lightline.component_expand = {
+"        \  'linter_warnings': 'lightline#ale#warnings',
+"        \  'linter_errors': 'lightline#ale#errors',
+"        \  'linter_ok': 'lightline#ale#ok',
+"        \ }
+"  let g:lightline.component_type = {
+"        \     'linter_warnings': 'warning',
+"        \     'linter_errors': 'error',
+"        \ }
+"  let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+"  
+let g:ycm_enable_autocmd_on_diagnostic_change = 1
+" Lightline YCM
+"      \  'linter_warnings': 'youcompleteme#GetWarningCount()',
+"      \  'linter_errors': 'youcompleteme#GetErrorCount()',
+
 let g:lightline.component_expand = {
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
+      \  'linter_errors': 'ale#statusline#Count(bufnr('')).error'
       \ }
 let g:lightline.component_type = {
-      \     'linter_warnings': 'warning',
       \     'linter_errors': 'error',
       \ }
-let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
-
+let g:lightline.active = {
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ],
+      \              [ 'linter_errors' ] ] }

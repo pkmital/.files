@@ -135,3 +135,5 @@ export DISPLAY=:0
 
 # Prompt set by promptline
 source ~/.promptline
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
