@@ -20,44 +20,42 @@ endif
 let NERDTreeIgnore=['\.pyc$',  '\.o$', '^__pycache__$', '.*\.js$', '.*\.map$', 'node_modules', '\.git$', '\.svn$']
 nnoremap <Leader>n :NERDTreeFind<CR>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
-"
+
 " Use silver surfer for grep
 if executable('ag')
-  " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  " let g:ctrlp_use_caching = 0
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
 endif
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
-" add ctrlp.vim setting
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-"let g:ctrlp_custom_ignore = 'tmp$\|\.git$\|\.hg$\|\.svn$\|.rvm$|.bundle$\|vendor'
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_match_window_bottom=1
-let g:ctrlp_max_height=25
-let g:ctrlp_match_window_reversed=0
-let g:ctrlp_mruf_max=500
-let g:ctrlp_follow_symlinks=1
-let g:ctrlp_clear_cache_on_exit=0
-let g:ctrlp_custom_ignore = {
- \ 'git': '.git/', 
- \ 'gitignore': 'git --git-dir=%s/.git ls-files -oc --exclude-standard',
- \ 'dir':  '\v[\/]\.(git|hg|svn|rvm|bundle|vendor|tmp)$',
- \ 'file': '\v\.(exe|so|dll)$',
- \ 'images': '\v\.(jpg|JPG|JPEG|jpeg|gif|png|bmp)$',
- \ 'web': 'node_modules'
- \ }
-" Use py matcher for performance
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" vnoremap K :grep! "<C-R>"" %<CR>
 
-" ctrl-p funky for functions
-nnoremap <Leader>q :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>Q :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+" bind \ (backward slash) to grep shortcut
+nnoremap \ :Ag<SPACE>
+
+" FZF
+set rtp+=~/.fzf
+command! MakeTags silent !ctags -R --exclude=/git --exclude=node_modules .
+nnoremap <C-p> :Files<CR>
+nnoremap <C-t> :Tags<CR>
+nnoremap <leader><tab> :BLines<CR>
+nnoremap <leader>q :BTags<CR>
+
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
+
+" Likewise, Files command with preview window
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" nnoremap <leader><tab> <plug>(fzf-maps-n)
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " PyDocString
 let g:pydocstring_templates_dir = '~/.vim/bundle/vim-pydocstring/test/templates/numpy'
@@ -78,7 +76,7 @@ if has("persistent_undo")
 endif
 
 " ,y and ,p for cross-vim clipboard w/o X11
-vmap <leader>y :w! /tmp/vitmp<CR>                                                                   
+vmap <leader>y :w! /tmp/vitmp<CR>
 nmap <leader>p :r! cat /tmp/vitmp<CR>
 
 " Create session, continue w/ vim -S
@@ -98,7 +96,6 @@ let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 1
 set previewheight=25
 
-
 " Folding for Python; should move this to ftplugin
 nnoremap <space> za
 vnoremap <space> zf
@@ -110,10 +107,10 @@ nnoremap <leader>L :call Yapf("--style google")<CR>
 set nu
 
 "  Yank/Paste clipboard
-nnoremap <C-y> "+y
-vnoremap <C-y> "+y
-nnoremap <C-p> "+gP
-vnoremap <C-p> "+gP
+" nnoremap <C-y> "+y
+" vnoremap <C-y> "+y
+" nnoremap <C-p> "+gP
+" vnoremap <C-p> "+gP
 set pastetoggle=<F2>
 
 " Move to normal mode when using arrows
@@ -123,24 +120,13 @@ inoremap <silent> <Down> <ESC><Down>
 " Make jj ESC
 inoremap jj <Esc>
 
-" Show gutter always, for Git
-" let g:gitgutter_override_sign_column_highlight = 0
-" let g:gitgutter_sign_column_always = 0
-
 " Toggle gutter shit
 nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:IndentLinesToggle<CR>
 nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>
 
-" Tab/Indents
-" set autoindent
-" set ts=4
-" set expandtab
-" set shiftwidth=4
-"set cursorline
-
 " Clear highlighting on ESC in normal
 " nnoremap <esc> :noh<return>:SyntasticReset<return>:ALEReset<return>:cclose<return><esc>
-nnoremap <esc> :noh<return>:ALEReset<return>:cclose<return><esc>
+nnoremap <esc> :noh<return>:ALEReset<return>:cclose<return>:pclose<return><esc>
 nnoremap <esc>^[ <esc>^[
 
 " Seems criminal but...
@@ -181,23 +167,6 @@ nnoremap <Leader>z :Goyo<CR>i<Esc>`^
 "let g:pymode_doc = 1
 let g:pymode_doc_key = 'D'
 
-" Linting
-let g:pymode_lint = 1
-let g:pymode_lint_checker = "pyflakes,pep8"
-let g:pymode_options_max_line_length = 90
-" Auto check on save
-"let g:pymode_lint_write = 1
-let g:pymode_syntax = 1
-let g:pymode_syntax_all = 1
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-let g:pymode_syntax_space_errors = g:pymode_syntax_all
-let g:pymode_rope = 0
-let g:pymode_lint_signs = 1
-let g:pymode_python = 'python3'
- nnoremap <leader>l :PymodeLint<CR>
-" nnoremap <leader>L :PymodeLintAuto<CR>
-
-
 " Syntax
 filetype on
 syntax on
@@ -223,13 +192,14 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_python_pycodestyle_options = '--max-line-length 90'
 let g:ale_linters = {
-\   'python': ['autopep8', 'pyflakes', 'pycodestyle', 'isort', 'pylint', 'yapf']
+\   'python': ['autopep8', 'pyflakes', 'pycodestyle', 'isort', 'yapf']
 \}
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
-let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
 " if you don't want linters to run on opening a file
 " let g:ale_lint_on_enter = 0<Paste>
 
@@ -252,6 +222,7 @@ let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0
 
 " Markdown Ctag
+nnoremap <leader>c <ESC>:!ctags -R --exclude=/git --exclude=node_modules .<CR>
 let g:tagbar_type_markdown = {
             \ 'ctagstype' : 'markdown',
             \ 'kinds' : [
@@ -336,15 +307,6 @@ set timeoutlen=1000 ttimeoutlen=0
 
 " Tired of lowercasing stuff by mistake
 vnoremap u :noh<cr>
-
-" bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-" vnoremap K :grep! "<C-R>"" %<CR>
-
-" bind \ (backward slash) to grep shortcut
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-
-nnoremap \ :Ag<SPACE>
 
 "let g:indent_guides_enable_on_vim_startup = 1
 "let g:indent_guides_start_level = 2
