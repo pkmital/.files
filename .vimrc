@@ -24,8 +24,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 " Use silver surfer for grep
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
 endif
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
@@ -99,9 +97,6 @@ set previewheight=25
 " Folding for Python; should move this to ftplugin
 nnoremap <space> za
 vnoremap <space> zf
-
-" YAPF
-nnoremap <leader>L :call ALEFix<CR>
 
 " Line Numbers
 set nu
@@ -196,14 +191,20 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
-\   'python': ['autopep8', 'isort', 'yapf'],
 \}
-let g:ale_python_flake8_executable = 'python3'
+let g:ale_python_flake8_executable = '/etc/anaconda/3/bin/python'
 let g:ale_python_flake8_args = '-m flake8 --ignore E501'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
+
+" YAPF
+nnoremap <leader>L :ALEFix<CR>
+" autocmd FileType python nnoremap <buffer><Leader>L :<C-u>Yapf<CR>
+" let g:yapf#extra_args='--style="{based_on_style: facebook, indent_width: 4}"'
+" let g:yapf#code_style='facebook'
+autocmd FileType python nnoremap <buffer><leader>L :0,$!yapf --style="{based_on_style: google}"<Cr><C-o>
 " if you don't want linters to run on opening a file
 " let g:ale_lint_on_enter = 0<Paste>
 
@@ -254,14 +255,10 @@ let g:lightline = {
 "let g:airline#extensions#tabline#show_buffers = 0
 "
 "" tab shortcuts
-"nnoremap <C-b>  :tabprevious<CR>
-"inoremap <C-b>  <Esc>:tabprevious<CR>i
-"nnoremap <C-m>  :tabnext<CR>
-"inoremap <C-m>  <Esc>:tabnext<CR>i
-"nnoremap <C-t>  :tabnew<CR>
-"inoremap <C-t>  <Esc>:tabnew<CR>i
-"nnoremap <C-x>  :tabclose<CR>
-"inoremap <C-x>  <Esc>:tabclose<CR>i
+nnoremap <C-b>  :tabprevious<CR>
+nnoremap <C-B>  :tabnext<CR>
+nnoremap <C-c>  :tabnew<CR>
+nnoremap <C-x>  :tabclose<CR>
 
 " Easier Pane Navigation
 noremap <C-j> <C-W>j
@@ -276,8 +273,8 @@ autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
-" let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
-let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+"let g:ycm_python_binary_path = '/usr/bin/python3'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
 
 " Redraw hacks to force refresh
