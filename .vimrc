@@ -43,19 +43,26 @@ nnoremap <C-p> :Files<CR>
 nnoremap <C-t> :Tags<CR>
 nnoremap <leader><tab> :BLines<CR>
 nnoremap <leader>q :BTags<CR>
-
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
-
-" Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-" nnoremap <leader><tab> <plug>(fzf-maps-n)
 let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
 " PyDocString
 let g:pydocstring_templates_dir = '~/.vim/bundle/vim-pydocstring/test/templates/numpy'
@@ -101,7 +108,7 @@ nnoremap <space> za
 vnoremap <space> zf
 
 " YAPF
-nnoremap <leader>L :call Yapf("--style google")<CR>
+nnoremap <leader>L :call Yapf("--style='{based_on_style: facebook, coalesce_brackets: true}'")<CR>
 
 " Line Numbers
 set nu
