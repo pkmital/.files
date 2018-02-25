@@ -135,3 +135,8 @@ export DISPLAY=:0
 
 # Prompt set by promptline
 source ~/.promptline
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# added by Anaconda3 installer
+export PATH="/etc/anaconda/3/bin:$PATH"
