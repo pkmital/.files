@@ -38,6 +38,8 @@ nnoremap \ :Ag<SPACE>
 
 " FZF
 set rtp+=~/.fzf
+set rtp+=/usr/local/opt/fzf
+set rtp+=/usr/local/bin/ctags
 command! MakeTags silent !ctags -R --exclude=/git --exclude=node_modules .
 nnoremap <C-p> :Files<CR>
 nnoremap <C-t> :Tags<CR>
@@ -277,7 +279,8 @@ autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
 " let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
-let g:ycm_python_binary_path = '/usr/bin/python3'
+" let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
 
 " Redraw hacks to force refresh
