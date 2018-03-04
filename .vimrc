@@ -202,6 +202,7 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'python': ['autopep8']
 \}
 let g:ale_python_flake8_executable = '/etc/anaconda/3/bin/python'
 let g:ale_python_flake8_args = '-m flake8 --ignore E501'
@@ -211,7 +212,7 @@ let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 
 " YAPF
-nnoremap <leader>L :ALEFix<CR>
+" nnoremap <leader>L :ALEFix<CR>
 " autocmd FileType python nnoremap <buffer><Leader>L :<C-u>Yapf<CR>
 " let g:yapf#extra_args='--style="{based_on_style: facebook, indent_width: 4}"'
 " let g:yapf#code_style='facebook'
@@ -272,10 +273,10 @@ nnoremap <C-c>  :tabnew<CR>
 nnoremap <C-x>  :tabclose<CR>
 
 " Easier Pane Navigation
-noremap <C-j> <C-W>j
-noremap <C-k> <C-W>k
-noremap <C-h> <C-W>h
-noremap <C-l> <C-W>l
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
 
 " Moving around in wrapped lines:
 autocmd FileType html,markdown,text nnoremap <expr> j v:count ? 'j' : 'gj'
@@ -331,18 +332,18 @@ let g:indentLine_char = '┆'
 "'▏'
 "'︳'
 "
-"  " Lightline ALE
-"  let g:lightline.component_expand = {
-"        \  'linter_warnings': 'lightline#ale#warnings',
-"        \  'linter_errors': 'lightline#ale#errors',
-"        \  'linter_ok': 'lightline#ale#ok',
-"        \ }
-"  let g:lightline.component_type = {
-"        \     'linter_warnings': 'warning',
-"        \     'linter_errors': 'error',
-"        \ }
-"  let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
-"  
+" Lightline ALE
+let g:lightline.component_expand = {
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \ }
+let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+
 let g:ycm_enable_autocmd_on_diagnostic_change = 1
 " Lightline YCM
 "      \  'linter_warnings': 'youcompleteme#GetWarningCount()',
