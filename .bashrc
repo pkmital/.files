@@ -115,6 +115,7 @@ alias la='ls -A'
 #alias l='ls -l-h'
 alias ..='cd ..'
 alias ipy='ptpython3'
+alias xp='PATH="/usr/lib/xorg:$PATH" xpra start :12'
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
