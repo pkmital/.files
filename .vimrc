@@ -36,24 +36,33 @@ nnoremap \ :Ag<SPACE>
 
 " FZF
 set rtp+=~/.fzf
+set rtp+=/usr/local/opt/fzf
+set rtp+=/usr/local/bin/ctags
 command! MakeTags silent !ctags -R --exclude=/git --exclude=node_modules .
 nnoremap <C-p> :Files<CR>
 nnoremap <C-t> :Tags<CR>
 nnoremap <leader><tab> :BLines<CR>
 nnoremap <leader>q :BTags<CR>
-
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
-
-" Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-" nnoremap <leader><tab> <plug>(fzf-maps-n)
 let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
 " PyDocString
 let g:pydocstring_templates_dir = '~/.vim/bundle/vim-pydocstring/test/templates/numpy'
@@ -98,6 +107,8 @@ set previewheight=25
 nnoremap <space> za
 vnoremap <space> zf
 
+" YAPF
+nnoremap <leader>L :call Yapf("--style='{based_on_style: facebook, coalesce_brackets: true}'")<CR>
 " Line Numbers
 set nu
 
@@ -191,6 +202,7 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'python': ['autopep8']
 \}
 let g:ale_python_flake8_executable = '/etc/anaconda/3/bin/python'
 let g:ale_python_flake8_args = '-m flake8 --ignore E501'
@@ -200,7 +212,7 @@ let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 
 " YAPF
-nnoremap <leader>L :ALEFix<CR>
+" nnoremap <leader>L :ALEFix<CR>
 " autocmd FileType python nnoremap <buffer><Leader>L :<C-u>Yapf<CR>
 " let g:yapf#extra_args='--style="{based_on_style: facebook, indent_width: 4}"'
 " let g:yapf#code_style='facebook'
@@ -261,10 +273,10 @@ nnoremap <C-c>  :tabnew<CR>
 nnoremap <C-x>  :tabclose<CR>
 
 " Easier Pane Navigation
-noremap <C-j> <C-W>j
-noremap <C-k> <C-W>k
-noremap <C-h> <C-W>h
-noremap <C-l> <C-W>l
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
 
 " Moving around in wrapped lines:
 autocmd FileType html,markdown,text nnoremap <expr> j v:count ? 'j' : 'gj'
@@ -273,8 +285,9 @@ autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
-let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
-"let g:ycm_python_binary_path = '/usr/bin/python3'
+" let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+" let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
 
 " Redraw hacks to force refresh
@@ -319,18 +332,18 @@ let g:indentLine_char = '┆'
 "'▏'
 "'︳'
 "
-"  " Lightline ALE
-"  let g:lightline.component_expand = {
-"        \  'linter_warnings': 'lightline#ale#warnings',
-"        \  'linter_errors': 'lightline#ale#errors',
-"        \  'linter_ok': 'lightline#ale#ok',
-"        \ }
-"  let g:lightline.component_type = {
-"        \     'linter_warnings': 'warning',
-"        \     'linter_errors': 'error',
-"        \ }
-"  let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
-"  
+" Lightline ALE
+let g:lightline.component_expand = {
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \ }
+let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+
 let g:ycm_enable_autocmd_on_diagnostic_change = 1
 " Lightline YCM
 "      \  'linter_warnings': 'youcompleteme#GetWarningCount()',
