@@ -4,6 +4,9 @@ execute pathogen#helptags()
 colorscheme apprentice
 let mapleader = ","
 
+set lazyredraw
+set ttyfast
+
 " Match parens
 set showmatch
 hi MatchParen cterm=none ctermbg=green ctermfg=blue
@@ -161,7 +164,7 @@ au BufRead *.md setlocal spell
 au BufRead *.mdown setlocal spell
 
 " Python highlighting
-let g:python_highlight_all = 1
+" let g:python_highlight_all = 1
 
 " Goyo Distraction free editing
 let g:goyo_height = '100%'
@@ -198,7 +201,7 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_python_pycodestyle_options = '--max-line-length 90'
 let g:ale_linters = {
-\   'python': ['flake8', 'pycodestyle']
+\   'python': ['flake8']
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
