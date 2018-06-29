@@ -285,9 +285,9 @@ autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
-" let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 " let g:ycm_python_binary_path = '/usr/bin/python3'
-let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
+" let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
 
 " Redraw hacks to force refresh
@@ -313,6 +313,9 @@ endif
 " Retab 2 -> 4
 nnoremap <leader>t <ESC>:set ts=2 noet<CR>:retab!<CR>:set et ts=4<CR>:retab<CR>
 vnoremap <leader>t <ESC>:set ts=2 noet<CR>:'<,'>retab!<CR>:set et ts=4<CR>:'<,'>retab<CR>
+
+nnoremap <leader>T <ESC>:set ts=4 noet<CR>:retab!<CR>:set et ts=2<CR>:retab<CR>
+vnoremap <leader>T <ESC>:set ts=4 noet<CR>:'<,'>retab!<CR>:set et ts=2<CR>:'<,'>retab<CR>
 
 " Turn off automatic visual selection w/ mouse
 set mouse-=a
