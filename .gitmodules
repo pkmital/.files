@@ -1,12 +1,15 @@
 [submodule ".vim/bundle/Conque-GDB"]
 	path = .vim/bundle/Conque-GDB
 	url = git@github.com/vim-scripts/Conque-GDB.git
-[submodule ".vim/bundle/vim-lldb"]
-	path = .vim/bundle/vim-lldb
-	url = git@github.com/gilligan/vim-lldb.git
 [submodule ".vim/bundle/YouCompleteMe"]
 	path = .vim/bundle/YouCompleteMe
 	url = git@github.com:Valloric/YouCompleteMe.git
 [submodule ".vim/bundle/vim-clang-format"]
 	path = .vim/bundle/vim-clang-format
 	url = git@github.com:rhysd/vim-clang-format.git
+[submodule ".vim/bundle/lightline-ale"]
+	path = .vim/bundle/lightline-ale
+	url = git@github.com:maximbaz/lightline-ale.git
+[submodule ".vim/bundle/searchfold.vim"]
+	path = .vim/bundle/searchfold.vim
+	url = git@github.com:vim-scripts/searchfold.vim.git
