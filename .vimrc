@@ -212,7 +212,7 @@ let g:ale_python_flake8_executable = '/etc/anaconda/3/bin/python'
 let g:ale_python_flake8_args = '-m flake8 --ignore E501'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
-let g:ale_lint_on_save = 0
+let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 nnoremap <leader>l :ALELint<CR>
 
@@ -221,6 +221,7 @@ nnoremap <leader>l :ALELint<CR>
 " let g:yapf#extra_args='--style="{based_on_style: facebook, indent_width: 4}"'
 " let g:yapf#code_style='facebook'
 autocmd FileType python nnoremap <buffer><leader>L :0,$!yapf --style="{based_on_style: google}"<Cr><C-o>
+autocmd FileType cpp nnoremap <buffer><leader>L :ClangFormat<Cr><C-o>
 " if you don't want linters to run on opening a file
 " let g:ale_lint_on_enter = 0<Paste>
 

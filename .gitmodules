@@ -1,9 +1,9 @@
 [submodule ".vim/bundle/Conque-GDB"]
 	path = .vim/bundle/Conque-GDB
-	url = https://github.com/vim-scripts/Conque-GDB.git
+	url = git@github.com/vim-scripts/Conque-GDB.git
 [submodule ".vim/bundle/vim-lldb"]
 	path = .vim/bundle/vim-lldb
-	url = https://github.com/gilligan/vim-lldb.git
+	url = git@github.com/gilligan/vim-lldb.git
 [submodule ".vim/bundle/YouCompleteMe"]
 	path = .vim/bundle/YouCompleteMe
 	url = git@github.com:Valloric/YouCompleteMe.git
