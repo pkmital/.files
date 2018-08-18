@@ -13,3 +13,6 @@
 [submodule ".vim/bundle/searchfold.vim"]
 	path = .vim/bundle/searchfold.vim
 	url = git@github.com:vim-scripts/searchfold.vim.git
+[submodule ".vim/bundle/vim-lldb"]
+	path = .vim/bundle/vim-lldb
+	url = git@github.com:gilligan/vim-lldb.git
