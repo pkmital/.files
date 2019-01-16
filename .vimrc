@@ -4,8 +4,15 @@ execute pathogen#helptags()
 colorscheme apprentice
 let mapleader = ","
 
-set lazyredraw
+" Redraw hacks to force refresh
+" set lazyredraw
 set ttyfast
+
+if &term =~ '256color'
+    " Disable Background Color Erase (BCE) so that color schemes
+    " work properly when Vim is used inside tmux and GNU screen.
+    set t_ut=
+endif
 
 " Match parens
 set showmatch
@@ -20,6 +27,7 @@ if has('unix')
   endif
 endif
 
+let NERDTreeShowHidden=1
 let NERDTreeIgnore=['\.pyc$',  '\.o$', '^__pycache__$', '.*\.js$', '.*\.map$', 'node_modules', '\.git$', '\.svn$']
 nnoremap <Leader>n :NERDTreeFind<CR>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
@@ -28,7 +36,8 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
-command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+" command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|redraw!
 
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -48,7 +57,7 @@ nnoremap <leader><tab> :BLines<CR>
 nnoremap <leader>q :BTags<CR>
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                 <bang>0 ? fzf#vim#with_preview('up:40%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 command! -bang -nargs=? -complete=dir Files
@@ -257,6 +266,10 @@ let g:tagbar_type_markdown = {
 
 " UndoTree
 nnoremap <leader>u <ESC>:UndotreeToggle<cr>
+let g:undotree_HighlightChangedText = 1
+let g:undotree_HighlightSyntaxAdd = "DiffAdd"
+let g:undotree_HighlightSyntaxChange = "DiffChange"
+let g:undotree_WindowLayout = 2
 
 let g:lightline = {
       \ 'colorscheme': 'jellybeans',
@@ -291,14 +304,10 @@ autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
 let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 " let g:ycm_python_binary_path = '/usr/bin/python3'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
-
-" Redraw hacks to force refresh
-set ttyfast
-set lazyredraw
 
 " These didn't seem to help w/ my issues w/ markdown + tmux
 " au FileWritePost * :redraw!
@@ -351,26 +360,24 @@ let g:lightline.component_type = {
       \     'linter_warnings': 'warning',
       \     'linter_errors': 'error',
       \ }
-let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+" let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
 
 let g:ycm_enable_autocmd_on_diagnostic_change = 1
 " Lightline YCM
 "      \  'linter_warnings': 'youcompleteme#GetWarningCount()',
 "      \  'linter_errors': 'youcompleteme#GetErrorCount()',
 
-let g:lightline.component_expand = {
-      \  'linter_errors': 'ale#statusline#Count(bufnr('')).error'
-      \ }
-let g:lightline.component_type = {
-      \     'linter_errors': 'error',
-      \ }
+" let g:lightline.component_expand = {
+"       \  'linter_errors': 'ale#statusline#Count(bufnr('')).error'
+"       \ }
 let g:lightline.active = {
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
       \              [ 'fileformat', 'fileencoding', 'filetype' ],
-      \              [ 'linter_errors' ] ] }
+      \              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ] }
 
 " Conque
-let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
-let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
-let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly  
+" let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
+" let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
+" let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly  

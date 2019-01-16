@@ -28,3 +28,9 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 export KEYTIMEOUT=1
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# added by travis gem
+[ -f /home/pkmital/.travis/travis.sh ] && source /home/pkmital/.travis/travis.sh

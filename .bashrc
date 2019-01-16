@@ -141,3 +141,11 @@ source ~/.promptline
 
 # added by Anaconda3 installer
 export PATH="/etc/anaconda/3/bin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# added by travis gem
+[ -f /home/pkmital/.travis/travis.sh ] && source /home/pkmital/.travis/travis.sh
