@@ -36,8 +36,8 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
-" command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|redraw!
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+" command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|redraw!
 
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -55,7 +55,13 @@ nnoremap <C-p> :Files<CR>
 nnoremap <C-t> :Tags<CR>
 nnoremap <leader><tab> :BLines<CR>
 nnoremap <leader>q :BTags<CR>
-command! -bang -nargs=* Ag
+" command! -bang -nargs=* Rg
+"   \ call fzf#vim#grep(
+"   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
+"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+"   \   <bang>0)
+command! -bang -nargs=* Fd
   \ call fzf#vim#ag(<q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:40%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
