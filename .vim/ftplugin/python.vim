@@ -5,5 +5,5 @@ set expandtab
 set autoindent
 set foldcolumn=1  " Optional
 set foldnestmax=4
-set foldmethod=indent
+set foldmethod=syntax
 "set cursorline

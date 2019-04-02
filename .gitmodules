@@ -1,9 +1,6 @@
 [submodule ".vim/bundle/YouCompleteMe"]
 	path = .vim/bundle/YouCompleteMe
 	url = git@github.com:Valloric/YouCompleteMe.git
-[submodule ".vim/bundle/vim-clang-format"]
-	path = .vim/bundle/vim-clang-format
-	url = git@github.com:rhysd/vim-clang-format.git
 [submodule ".vim/bundle/lightline-ale"]
 	path = .vim/bundle/lightline-ale
 	url = git@github.com:maximbaz/lightline-ale.git
@@ -16,3 +13,9 @@
 [submodule ".vim/bundle/python.vim"]
 	path = .vim/bundle/python.vim
 	url = git@github.com:vim-scripts/python.vim.git
+[submodule ".vim/bundle/vim-clang-format"]
+	path = .vim/bundle/vim-clang-format
+	url = https://github.com/rhysd/vim-clang-format.git
+[submodule ".vim/bundle/vim-matchup"]
+	path = .vim/bundle/vim-matchup
+	url = https://github.com/andymass/vim-matchup.git

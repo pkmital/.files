@@ -5,13 +5,17 @@ colorscheme apprentice
 let mapleader = ","
 
 " Redraw hacks to force refresh
-" set lazyredraw
+set lazyredraw
 set ttyfast
 
+" Deferred match parens: https://github.com/andymass/vim-matchup#deferred-highlighting
+let g:matchup_matchparen_deferred = 1
+hi MatchParen ctermbg=blue guibg=lightblue cterm=italic gui=italic
+
 if &term =~ '256color'
-    " Disable Background Color Erase (BCE) so that color schemes
-    " work properly when Vim is used inside tmux and GNU screen.
-    set t_ut=
+	" Disable Background Color Erase (BCE) so that color schemes
+	" work properly when Vim is used inside tmux and GNU screen.
+	set t_ut=
 endif
 
 " Match parens
@@ -20,11 +24,11 @@ hi MatchParen cterm=none ctermbg=green ctermfg=blue
 
 " Shared X11 Clipboard
 if has('unix')
-  if has('mac')       " osx
-    set clipboard=unnamed
-  else                " linux, bsd, etc
-    set clipboard=unnamedplus
-  endif
+	if has('mac')       " osx
+		set clipboard=unnamed
+	else                " linux, bsd, etc
+		set clipboard=unnamedplus
+	endif
 endif
 
 let NERDTreeShowHidden=1
@@ -34,7 +38,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 
 " Use silver surfer for grep
 if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
+	set grepprg=ag\ --nogroup\ --nocolor
 endif
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 " command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|redraw!
@@ -45,6 +49,12 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " bind \ (backward slash) to grep shortcut
 nnoremap \ :Ag<SPACE>
+
+" Navigate buffers
+nnoremap <bs> <c-^>
+
+" Light cursor column
+set cursorcolumn
 
 " FZF
 set rtp+=~/.fzf
@@ -62,25 +72,25 @@ nnoremap <leader>q :BTags<CR>
 "   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
 "   \   <bang>0)
 command! -bang -nargs=* Fd
-  \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:40%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
+			\ call fzf#vim#ag(<q-args>,
+			\                 <bang>0 ? fzf#vim#with_preview('up:40%')
+			\                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+			\                 <bang>0)
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+			\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+			\ { 'fg':      ['fg', 'Normal'],
+			\ 'bg':      ['bg', 'Normal'],
+			\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+			\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+			\ 'info':    ['fg', 'PreProc'],
+			\ 'border':  ['fg', 'Ignore'],
+			\ 'prompt':  ['fg', 'Conditional'],
+			\ 'pointer': ['fg', 'Exception'],
+			\ 'marker':  ['fg', 'Keyword'],
+			\ 'spinner': ['fg', 'Label'],
+			\ 'header':  ['fg', 'Comment'] }
 
 " PyDocString
 let g:pydocstring_templates_dir = '~/.vim/bundle/vim-pydocstring/test/templates/numpy'
@@ -96,8 +106,8 @@ let g:vim_markdown_preview_github=1
 
 " Undo
 if has("persistent_undo")
-    set undodir=~/.undodir/
-    set undofile
+	set undodir=~/.undodir/
+	set undofile
 endif
 
 " ,y and ,p for cross-vim clipboard w/o X11
@@ -124,6 +134,21 @@ set previewheight=25
 " Folding for Python; should move this to ftplugin
 nnoremap <space> za
 vnoremap <space> zf
+nnoremap <silent> <leader>zj :call NextClosedFold('j')<cr>
+nnoremap <silent> <leader>zk :call NextClosedFold('k')<cr>
+function! NextClosedFold(dir)
+    let cmd = 'norm!z' . a:dir
+    let view = winsaveview()
+    let [l0, l, open] = [0, view.lnum, 1]
+    while l != l0 && open
+        exe cmd
+        let [l0, l] = [l, line('.')]
+        let open = foldclosed(l) < 0
+    endwhile
+    if open
+        call winrestview(view)
+    endif
+endfunction
 
 " YAPF
 nnoremap <leader>L :call Yapf("--style='{based_on_style: facebook, coalesce_brackets: true}'")<CR>
@@ -216,13 +241,13 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_python_pycodestyle_options = '--max-line-length 90'
 let g:ale_linters = {
-\   'python': ['flake8']
-\}
+			\   'python': ['flake8']
+			\}
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\   'python': ['autopep8'],
-\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
-\}
+			\   'javascript': ['eslint'],
+			\   'python': ['autopep8'],
+			\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
+			\}
 let g:ale_python_flake8_executable = '/etc/anaconda/3/bin/python'
 let g:ale_python_flake8_args = '-m flake8 --ignore E501'
 let g:ale_open_list = 1
@@ -261,14 +286,14 @@ let g:jsx_ext_required = 0
 " Markdown Ctag
 nnoremap <leader>c <ESC>:!ctags -R --exclude=/git --exclude=node_modules .<CR>
 let g:tagbar_type_markdown = {
-            \ 'ctagstype' : 'markdown',
-            \ 'kinds' : [
-                \ 'h:headings',
-                \ 'l:links',
-                \ 'i:images'
-            \ ],
-    \ "sort" : 0
-\ }
+			\ 'ctagstype' : 'markdown',
+			\ 'kinds' : [
+			\ 'h:headings',
+			\ 'l:links',
+			\ 'i:images'
+			\ ],
+			\ "sort" : 0
+			\ }
 
 " UndoTree
 nnoremap <leader>u <ESC>:UndotreeToggle<cr>
@@ -278,8 +303,8 @@ let g:undotree_HighlightSyntaxChange = "DiffChange"
 let g:undotree_WindowLayout = 2
 
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ }
+			\ 'colorscheme': 'jellybeans',
+			\ }
 "" tabs
 "let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#left_sep = ' '
@@ -327,8 +352,8 @@ nnoremap <leader>z <ESC>:GrammarousCheck<CR>
 
 " Last place editing
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
+	au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+				\| exe "normal! g'\"" | endif
 endif
 
 " Retab 2 -> 4
@@ -358,14 +383,14 @@ let g:indentLine_char = '┆'
 "
 " Lightline ALE
 let g:lightline.component_expand = {
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \ }
+			\  'linter_warnings': 'lightline#ale#warnings',
+			\  'linter_errors': 'lightline#ale#errors',
+			\  'linter_ok': 'lightline#ale#ok',
+			\ }
 let g:lightline.component_type = {
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \ }
+			\     'linter_warnings': 'warning',
+			\     'linter_errors': 'error',
+			\ }
 let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
 " let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
 
@@ -378,12 +403,22 @@ let g:ycm_enable_autocmd_on_diagnostic_change = 1
 "       \  'linter_errors': 'ale#statusline#Count(bufnr('')).error'
 "       \ }
 let g:lightline.active = {
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ],
-      \              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ] }
+			\   'right': [ [ 'lineinfo' ],
+			\              [ 'percent' ],
+			\              [ 'fileformat', 'fileencoding', 'filetype' ],
+			\              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ] }
 
 " Conque
 " let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
 " let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
 " let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly  
+"
+" vim-multiple-cursors Setup {{{
+function! Multiple_cursors_before()
+	call youcompleteme#DisableCursorMovedAutocommands()
+endfunction
+
+function! Multiple_cursors_after()
+	call youcompleteme#EnableCursorMovedAutocommands()
+endfunction
+" }}}
