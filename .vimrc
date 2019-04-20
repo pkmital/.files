@@ -20,7 +20,8 @@ endif
 
 " Match parens
 set showmatch
-hi MatchParen cterm=none ctermbg=green ctermfg=blue
+hi MatchParen gui=bold guibg=blue guifg=blue
+" hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " Shared X11 Clipboard
 if has('unix')
@@ -54,7 +55,7 @@ nnoremap \ :Ag<SPACE>
 nnoremap <bs> <c-^>
 
 " Light cursor column
-set cursorcolumn
+" set cursorcolumn
 
 " FZF
 set rtp+=~/.fzf
@@ -244,11 +245,12 @@ let g:ale_linters = {
 			\   'python': ['flake8']
 			\}
 let g:ale_fixers = {
-			\   'javascript': ['eslint'],
-			\   'python': ['autopep8'],
-			\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
-			\}
-let g:ale_python_flake8_executable = '/etc/anaconda/3/bin/python'
+	\   'javascript': ['eslint'],
+	\   'python': ['autopep8'],
+	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
+\}
+" let g:ale_python_flake8_executable = '/etc/anaconda/3/bin/python'
+let g:ale_python_flake8_executable = '/Users/pkmital/anaconda3/bin/python3'
 let g:ale_python_flake8_args = '-m flake8 --ignore E501'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
@@ -334,7 +336,8 @@ autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
-let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+" let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 " let g:ycm_python_binary_path = '/usr/bin/python3'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'

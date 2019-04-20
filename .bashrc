@@ -95,10 +95,10 @@ fi
 
 # some more ls aliasesliases
 ltrfunction() {
-  ls -trFGlAhp --color -h --group-directories-first $1  && echo Total files: "$[$(ls -1ap | grep -v $'/' | wc -l)]"
+  ls -trFGlAhp  -h $1  && echo Total files: "$[$(ls -1ap | grep -v $'/' | wc -l)]"
 }
 lfunction() {
-  ls -FGlAhp --color -h --group-directories-first $1  && echo Total files: "$[$(ls -1ap | grep -v $'/' | wc -l)]"
+  ls -FGlAhp  -h $1  && echo Total files: "$[$(ls -1ap | grep -v $'/' | wc -l)]"
 }
 
 PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
@@ -109,12 +109,10 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # Alias definitions.
 alias ..='cd ..'
 alias ltr=ltrfunction
-alias l=lfunction
+alias l='ls -alh'
 alias ll='ls -alF'
 alias la='ls -A'
-#alias l='ls -l-h'
 alias ..='cd ..'
-alias ipy='ptpython3'
 alias xp='PATH="/usr/lib/xorg:$PATH" xpra start :12'
 
 if [ -f ~/.bash_aliases ]; then
@@ -129,12 +127,12 @@ test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shel
 set show-mode-in-prompt on
 
 # Anaconda
-export PATH="/opt/conda/bin:$PATH"
-export PATH=$PATH:/usr/local/cuda/bin:/usr/local/bin
+export PATH=/Users/pkmital/anaconda3/bin:$PATH:/usr/local/cuda/bin:/usr/local/bin
 export MPLBACKEND=Agg
 export DISPLAY=:0
 
 # Prompt set by promptline
+source ~/.networks
 source ~/.promptline
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
