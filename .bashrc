@@ -150,3 +150,4 @@ term_title() {
 
 # added by travis gem
 [ -f /home/pkmital/.travis/travis.sh ] && source /home/pkmital/.travis/travis.sh
+. /etc/anaconda/3/etc/profile.d/conda.sh
