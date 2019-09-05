@@ -39,7 +39,8 @@ if ($TERM =~ '256' || &t_Co >= 256) || has("gui_running")
   hi LineNr         ctermbg=234  ctermfg=242  guibg=#1c1c1c guifg=#6c6c6c cterm=NONE           gui=NONE
   hi FoldColumn     ctermbg=234  ctermfg=242  guibg=#1c1c1c guifg=#6c6c6c cterm=NONE           gui=NONE
   hi Folded         ctermbg=234  ctermfg=242  guibg=#1c1c1c guifg=#6c6c6c cterm=NONE           gui=NONE
-  hi MatchParen     ctermbg=103  ctermfg=229  guibg=#8787af guifg=#ffffaf cterm=NONE           gui=NONE
+  " hi MatchParen     ctermbg=103  ctermfg=229  guibg=#8787af guifg=#ffffaf cterm=NONE           gui=NONE
+  hi MatchParen     ctermbg=red  ctermfg=yellow  guibg=red guifg=red cterm=NONE           gui=NONE
   hi signColumn     ctermbg=234  ctermfg=242  guibg=#1c1c1c guifg=#6c6c6c cterm=NONE           gui=NONE
 
   set background=dark

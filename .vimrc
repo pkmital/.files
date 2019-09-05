@@ -20,7 +20,8 @@ endif
 
 " Match parens
 set showmatch
-hi MatchParen cterm=none ctermbg=green ctermfg=blue
+hi MatchParen gui=bold guibg=blue guifg=blue
+" hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " Shared X11 Clipboard
 if has('unix')
@@ -54,7 +55,7 @@ nnoremap \ :Ag<SPACE>
 nnoremap <bs> <c-^>
 
 " Light cursor column
-set cursorcolumn
+" set cursorcolumn
 
 " FZF
 set rtp+=~/.fzf
@@ -244,10 +245,12 @@ let g:ale_linters = {
 			\   'python': ['flake8']
 			\}
 let g:ale_fixers = {
-			\   'javascript': ['eslint'],
-			\   'python': ['autopep8'],
-			\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
-			\}
+	\   'javascript': ['eslint'],
+	\   'python': ['autopep8'],
+	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
+\}
+" let g:ale_python_flake8_executable = 'python'
+" let g:ale_python_flake8_executable = '/Users/pkmital/anaconda3/bin/python3'
 let g:ale_python_flake8_args = '-m flake8 --ignore E501'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
@@ -337,6 +340,8 @@ autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
 let g:ycm_python_binary_path = '/home/pkmital/.conda/envs/dev/bin/python'
+" let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+" let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 " let g:ycm_python_binary_path = '/usr/bin/python3'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
@@ -424,3 +429,26 @@ function! Multiple_cursors_after()
 	call youcompleteme#EnableCursorMovedAutocommands()
 endfunction
 " }}}
+"
+" Highlight all instances of word under cursor, when idle.
+" Useful when studying strange source code.
+" Type z/ to toggle highlighting on/off.
+nnoremap z/ :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
+function! AutoHighlightToggle()
+   let @/ = ''
+   if exists('#auto_highlight')
+     au! auto_highlight
+     augroup! auto_highlight
+     setl updatetime=4000
+     echo 'Highlight current word: off'
+     return 0
+  else
+    augroup auto_highlight
+    au!
+    au CursorHold * let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'
+    augroup end
+    setl updatetime=500
+    echo 'Highlight current word: ON'
+  return 1
+ endif
+endfunction
