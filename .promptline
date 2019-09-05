@@ -212,7 +212,7 @@ function __promptline_left_prompt {
 
   # close sections
   printf "%s" "${reset_bg}
-  ${reset_bg}$reset$space"
+  ${reset_bg}➜$reset$space"
 }
 
 function __promptline_wrapper {

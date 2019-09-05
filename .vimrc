@@ -170,8 +170,8 @@ inoremap <silent> <Down> <ESC><Down>
 inoremap jj <Esc>
 
 " Toggle gutter shit
-nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:IndentLinesToggle<CR>
-nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>
+nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:IndentLinesToggle<CR>:set nofoldenable<CR>
+nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>:set foldenable<CR>
 
 " Clear highlighting on ESC in normal
 " nnoremap <esc> :noh<return>:SyntasticReset<return>:ALEReset<return>:cclose<return><esc>
@@ -248,7 +248,6 @@ let g:ale_fixers = {
 			\   'python': ['autopep8'],
 			\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
 			\}
-let g:ale_python_flake8_executable = '/etc/anaconda/3/bin/python'
 let g:ale_python_flake8_args = '-m flake8 --ignore E501'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
@@ -334,7 +333,10 @@ autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " YouCompleteMe
-let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
+" let g:ycm_echo_current_diagnostic = 0
+" We dont care about autocomplete
+let g:ycm_auto_trigger = 0
+let g:ycm_python_binary_path = '/home/pkmital/.conda/envs/dev/bin/python'
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 " let g:ycm_python_binary_path = '/usr/bin/python3'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'

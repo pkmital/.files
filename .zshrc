@@ -34,3 +34,19 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # added by travis gem
 [ -f /home/pkmital/.travis/travis.sh ] && source /home/pkmital/.travis/travis.sh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/etc/anaconda/3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/etc/anaconda/3/etc/profile.d/conda.sh" ]; then
+        . "/etc/anaconda/3/etc/profile.d/conda.sh"
+    else
+        export PATH="/etc/anaconda/3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

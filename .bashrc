@@ -145,5 +145,10 @@ export PATH="/etc/anaconda/3/bin:$PATH"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # export PATH="$PATH:$HOME/.rvm/bin"
 
+term_title() {
+    unset PROMPT_COMMAND
+    echo -ne "\033]0;${@}\007"
+}
+
 # added by travis gem
 [ -f /home/pkmital/.travis/travis.sh ] && source /home/pkmital/.travis/travis.sh
