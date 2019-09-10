@@ -171,13 +171,8 @@ inoremap <silent> <Down> <ESC><Down>
 inoremap jj <Esc>
 
 " Toggle gutter shit
-<<<<<<< Updated upstream
 nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:IndentLinesToggle<CR>:set nofoldenable<CR>
 nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>:set foldenable<CR>
-=======
-nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:IndentLinesToggle<CR>:set foldcolumn=0<CR>
-nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>:set foldcolumn=1<CR>
->>>>>>> Stashed changes
 
 " Clear highlighting on ESC in normal
 " nnoremap <esc> :noh<return>:SyntasticReset<return>:ALEReset<return>:cclose<return><esc>
