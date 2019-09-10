@@ -109,9 +109,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # Alias definitions.
 alias ..='cd ..'
 alias ltr=ltrfunction
-alias l='ls -alh'
-alias ll='ls -alF'
-alias la='ls -A'
+alias l='ls -alhG'
+alias ll='ls -alFG'
+alias la='ls -AG'
 alias ..='cd ..'
 alias xp='PATH="/usr/lib/xorg:$PATH" xpra start :12'
 
