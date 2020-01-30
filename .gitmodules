@@ -22,3 +22,9 @@
 [submodule ".vim/bundle/diffconflicts"]
 	path = .vim/bundle/diffconflicts
 	url = https://github.com/whiteinge/diffconflicts.git
+[submodule ".vim/bundle/vim-prettier"]
+	path = .vim/bundle/vim-prettier
+	url = https://github.com/prettier/vim-prettier
+[submodule ".vim/pack/git-plugins/start/ale"]
+	path = .vim/pack/git-plugins/start/ale
+	url = https://github.com/dense-analysis/ale.git

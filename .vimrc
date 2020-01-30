@@ -246,23 +246,24 @@ let g:ale_linters = {
 			\}
 let g:ale_fixers = {
 	\   'javascript': ['eslint'],
-	\   'python': ['autopep8'],
+	\   'python': ['black'],
 	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
 \}
 " let g:ale_python_flake8_executable = 'python'
-" let g:ale_python_flake8_executable = '/Users/pkmital/anaconda3/bin/python3'
-let g:ale_python_flake8_args = '-m flake8 --ignore E501'
+let g:ale_python_flake8_executable = '/home/pkmital/.conda/envs/dev/bin/flake8'
+let g:ale_python_flake8_args = '--ignore E501,W503'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 nnoremap <leader>l :ALELint<CR>
+nnoremap <leader>L :ALEFix<CR>
 
 " YAPF
 " autocmd FileType python nnoremap <buffer><Leader>L :<C-u>Yapf<CR>
 " let g:yapf#extra_args='--style="{based_on_style: facebook, indent_width: 4}"'
 " let g:yapf#code_style='facebook'
-autocmd FileType python nnoremap <buffer><leader>L :0,$!yapf --style="{based_on_style: google}"<Cr><C-o>
+" autocmd FileType python nnoremap <buffer><leader>L :0,$!yapf --style="{based_on_style: google}"<Cr><C-o>
 autocmd FileType cpp nnoremap <buffer><leader>L :ClangFormat<Cr><C-o>
 " if you don't want linters to run on opening a file
 " let g:ale_lint_on_enter = 0<Paste>

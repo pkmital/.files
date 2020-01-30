@@ -132,7 +132,6 @@ export MPLBACKEND=Agg
 export DISPLAY=:0
 
 # Prompt set by promptline
-source ~/.networks
 source ~/.promptline
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
