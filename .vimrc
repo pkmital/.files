@@ -116,7 +116,10 @@ vmap <leader>y :w! /tmp/vitmp<CR>
 nmap <leader>p :r! cat /tmp/vitmp<CR>
 
 " Create session, continue w/ vim -S
-nnoremap <leader>s :mksession<CR>
+" nnoremap <leader>s :mksession<CR>
+"
+" Git blame for current line
+nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
 " NERDTree
 nnoremap <leader>k :NERDTreeToggle<CR>
@@ -246,16 +249,18 @@ let g:ale_linters = {
 			\}
 let g:ale_fixers = {
 	\   'javascript': ['eslint'],
-	\   'python': ['autopep8'],
+	\   'python': ['black'],
 	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
 \}
 " let g:ale_python_flake8_executable = 'python'
-" let g:ale_python_flake8_executable = '/Users/pkmital/anaconda3/bin/python3'
-let g:ale_python_flake8_args = '-m flake8 --ignore E501'
+let g:ale_python_flake8_executable = '/home/pkmital/.conda/envs/mogees/bin/flake8'
+let g:ale_python_flake8_options = '--ignore=E501,W503 --max-line-length=100'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
 let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_enter = 0
 nnoremap <leader>l :ALELint<CR>
 
 " YAPF
@@ -339,7 +344,7 @@ autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 " let g:ycm_echo_current_diagnostic = 0
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
-let g:ycm_python_binary_path = '/home/pkmital/.conda/envs/dev/bin/python'
+let g:ycm_python_binary_path = '/home/pkmital/.conda/envs/mogees/bin/python'
 " let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
