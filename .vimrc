@@ -239,23 +239,25 @@ set encoding=utf-8
 " ALE
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_echo_msg_format = '(%code%): %s' " '[%linter%] %s [%severity%]'
 let g:ale_python_pycodestyle_options = '--max-line-length 90'
 let g:ale_linters = {
-			\   'python': ['flake8']
-			\}
+	\   'python': ['flake8']
+	\}
 let g:ale_fixers = {
 	\   'javascript': ['eslint'],
 	\   'python': ['black'],
 	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
 \}
 " let g:ale_python_flake8_executable = 'python'
-let g:ale_python_flake8_executable = '/home/pkmital/.conda/envs/dev/bin/flake8'
-let g:ale_python_flake8_args = '--ignore E501,W503'
+let g:ale_python_flake8_executable = '/home/pkmital/anaconda3/bin/flake8'
+let g:ale_python_flake8_options = '--ignore=E501,W503,E231,E203,W605 --max-line-length=100'
 let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 0
+" let g:ale_keep_list_window_open = 0
 let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
+" let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_insert_leave = 0
+" let g:ale_lint_on_enter = 0
 nnoremap <leader>l :ALELint<CR>
 nnoremap <leader>L :ALEFix<CR>
 
@@ -340,7 +342,7 @@ autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 " let g:ycm_echo_current_diagnostic = 0
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
-let g:ycm_python_binary_path = '/home/pkmital/.conda/envs/dev/bin/python'
+let g:ycm_python_binary_path = '~/anaconda3/envs/mogees/bin/python'
 " let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
