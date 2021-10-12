@@ -25,8 +25,8 @@
 [submodule ".vim/bundle/vim-prettier"]
 	path = .vim/bundle/vim-prettier
 	url = https://github.com/prettier/vim-prettier
-[submodule ".vim/pack/git-plugins/start/ale"]
-	path = .vim/pack/git-plugins/start/ale
+[submodule ".vim/bundle/ale"]
+	path = .vim/bundle/ale
 	url = https://github.com/dense-analysis/ale.git
 [submodule ".vim/bundle/vim-fugitive"]
 	path = .vim/bundle/vim-fugitive

@@ -267,11 +267,11 @@ set encoding=utf-8
 " ALE
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_echo_msg_format = '(%code%): %s' " '[%linter%] %s [%severity%]'
 let g:ale_python_pycodestyle_options = '--max-line-length 90'
 let g:ale_linters = {
-			\   'python': ['flake8']
-			\}
+	\   'python': ['flake8']
+	\}
 let g:ale_fixers = {
 	\   'javascript': ['eslint'],
 	\   'python': ['black'],
@@ -279,9 +279,9 @@ let g:ale_fixers = {
 \}
 " let g:ale_python_flake8_executable = 'python'
 let g:ale_python_flake8_executable = '/home/pkmital/anaconda3/bin/flake8'
-let g:ale_python_flake8_options = '--ignore=E501,W503,E203 --max-line-length=100'
+let g:ale_python_flake8_options = '--ignore=E501,W503,E231,E203,W605 --max-line-length=100'
 let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 0
+" let g:ale_keep_list_window_open = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
