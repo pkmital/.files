@@ -107,6 +107,7 @@ PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
+alias open='xdg-open'
 alias ..='cd ..'
 alias ltr=ltrfunction
 alias l='ls -alhG'
@@ -114,6 +115,8 @@ alias ll='ls -alFG'
 alias la='ls -AG'
 alias ..='cd ..'
 alias xp='PATH="/usr/lib/xorg:$PATH" xpra start :12'
+alias killmosh='pgrep mosh-server | grep -v $(ps -o ppid --no-headers $$) && xargs kill || echo "no active sessions to kill"'
+# cat /proc/cpuinfo | grep "^[c]pu MHz" | cut -b 12-18 | paste -sd+ - | bc | awk '{ print $1 / 64 }'"
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -126,17 +129,15 @@ export CUDA_HOME=/usr/local/cuda
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 set show-mode-in-prompt on
 
-# Anaconda
-export PATH=/Users/pkmital/anaconda3/bin:$PATH:/usr/local/cuda/bin:/usr/local/bin
+export PATH=/home/pkmital/anaconda3/bin:$CUDA_HOME/bin:$PATH:/usr/local/bin
 export MPLBACKEND=Agg
 export DISPLAY=:0
+export MKL_THREADING_LAYER=GNU
 
 # Prompt set by promptline
 source ~/.promptline
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# added by Anaconda3 installer
-export PATH="/etc/anaconda/3/bin:$PATH"
 # export PATH="$HOME/.rbenv/bin:$PATH"
 # eval "$(rbenv init -)"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -147,6 +148,14 @@ term_title() {
     echo -ne "\033]0;${@}\007"
 }
 
-# added by travis gem
-[ -f /home/pkmital/.travis/travis.sh ] && source /home/pkmital/.travis/travis.sh
-. /etc/anaconda/3/etc/profile.d/conda.sh
+. /home/pkmital/anaconda3/etc/profile.d/conda.sh
+
+# source ~/.winerc
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export CLUSTER_SECRET=be57e85f253b39a0e22e6ec5ceac9cf3a78c61d5dfa92db86b8a602d723663d5
+
+# Urbit
+. /home/pkmital/.nix-profile/etc/profile.d/nix.sh

@@ -1,6 +1,31 @@
 execute pathogen#infect()
 execute pathogen#helptags()
 
+call plug#begin('~/.vim/plugged')
+Plug 'SirVer/ultisnips'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'thomasfaingnaert/vim-lsp-snippets'
+Plug 'thomasfaingnaert/vim-lsp-ultisnips'
+Plug 'urbit/hoon.vim'
+call plug#end()
+
+let g:UltiSnipsExpandTrigger="<TAB>"
+let g:UltiSnipsJumpForwardTrigger="<TAB>"
+let g:UltiSnipsJumpBackwardTrigger="<S-TAB>"
+let g:asyncomplete_auto_completeopt = 0
+set completeopt=menuone,noinsert
+
+if executable('hoon-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'hoon-language-server',
+        \ 'cmd': ['hoon-language-server'],
+        \ 'whitelist': ['hoon'],
+        \ })
+endif
+
 colorscheme apprentice
 let mapleader = ","
 
@@ -190,9 +215,9 @@ let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
 
 " Airline
-let g:airline_theme='molokai'
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+" let g:airline_theme='molokai'
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
 
 " Vim Markdown conceals stuff. Don't.  Also don't fold.
 " set nofoldenable
@@ -253,8 +278,8 @@ let g:ale_fixers = {
 	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
 \}
 " let g:ale_python_flake8_executable = 'python'
-let g:ale_python_flake8_executable = '/home/pkmital/.conda/envs/mogees/bin/flake8'
-let g:ale_python_flake8_options = '--ignore=E501,W503 --max-line-length=100'
+let g:ale_python_flake8_executable = '/home/pkmital/anaconda3/bin/flake8'
+let g:ale_python_flake8_options = '--ignore=E501,W503,E203 --max-line-length=100'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
 let g:ale_lint_on_save = 1
@@ -341,11 +366,14 @@ autocmd FileType html,markdown,text nnoremap <expr> k v:count ? 'k' : 'gk'
 autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
+set listchars=tab:\|\
+set list
+
 " YouCompleteMe
 " let g:ycm_echo_current_diagnostic = 0
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
-let g:ycm_python_binary_path = '/home/pkmital/.conda/envs/mogees/bin/python'
+let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/mogees/bin/python'
 " let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
@@ -460,3 +488,4 @@ function! AutoHighlightToggle()
   return 1
  endif
 endfunction
+
