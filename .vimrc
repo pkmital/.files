@@ -2,6 +2,14 @@ execute pathogen#infect()
 execute pathogen#helptags()
 
 call plug#begin('~/.vim/plugged')
+Plug 'jpalardy/vim-slime'
+Plug 'tpope/vim-fugitive'
+Plug 'Yggdroot/indentLine'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'preservim/nerdtree'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'thesis/vim-solidity'
 Plug 'SirVer/ultisnips'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/async.vim'
@@ -378,7 +386,7 @@ let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/mogees/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 let g:ycm_min_num_identifier_candidate_chars = 1000
-" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 " let g:ycm_python_binary_path = '/usr/bin/python3'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
