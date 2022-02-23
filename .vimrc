@@ -2,6 +2,7 @@ execute pathogen#infect()
 execute pathogen#helptags()
 
 call plug#begin('~/.vim/plugged')
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-unimpaired'
 Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
@@ -285,6 +286,7 @@ let g:ale_linters = {
 	\}
 let g:ale_fixers = {
 	\   'javascript': ['eslint'],
+	\   'json': ['fixjson'],
 	\   'python': ['black'],
 	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
 \}
@@ -386,7 +388,7 @@ set list
 let g:ycm_auto_hover = ''
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
-let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/mogees/bin/python'
+let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/djmix/bin/python'
 " let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
