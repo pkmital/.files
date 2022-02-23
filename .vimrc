@@ -2,6 +2,9 @@ execute pathogen#infect()
 execute pathogen#helptags()
 
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-unimpaired'
+Plug 'dense-analysis/ale'
+Plug 'itchyny/lightline.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
@@ -379,6 +382,8 @@ set list
 
 " YouCompleteMe
 " let g:ycm_echo_current_diagnostic = 0
+" Don't cate about popup on overss
+let g:ycm_auto_hover = ''
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
 let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/mogees/bin/python'
@@ -390,6 +395,7 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.p
 " let g:ycm_python_binary_path = '/usr/bin/python3'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
+nnoremap <leader>d <ESC>:YcmCompleter GetDoc<CR>
 
 " These didn't seem to help w/ my issues w/ markdown + tmux
 " au FileWritePost * :redraw!
