@@ -2,6 +2,8 @@ execute pathogen#infect()
 execute pathogen#helptags()
 
 call plug#begin('~/.vim/plugged')
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'itchyny/lightline.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
@@ -282,6 +284,7 @@ let g:ale_linters = {
 	\}
 let g:ale_fixers = {
 	\   'javascript': ['eslint'],
+	\   'json': ['fixjson'],
 	\   'python': ['black'],
 	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
 \}
@@ -379,9 +382,11 @@ set list
 
 " YouCompleteMe
 " let g:ycm_echo_current_diagnostic = 0
+" Don't cate about popup on overss
+let g:ycm_auto_hover = ''
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
-let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/mogees/bin/python'
+let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/djmix/bin/python'
 " let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
@@ -390,6 +395,7 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.p
 " let g:ycm_python_binary_path = '/usr/bin/python3'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
+nnoremap <leader>d <ESC>:YcmCompleter GetDoc<CR>
 
 " These didn't seem to help w/ my issues w/ markdown + tmux
 " au FileWritePost * :redraw!
