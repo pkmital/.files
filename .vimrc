@@ -21,7 +21,6 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'thomasfaingnaert/vim-lsp-snippets'
 Plug 'thomasfaingnaert/vim-lsp-ultisnips'
-Plug 'urbit/hoon.vim'
 call plug#end()
 
 let g:UltiSnipsExpandTrigger="<TAB>"
@@ -388,7 +387,7 @@ set list
 let g:ycm_auto_hover = ''
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
-let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/djmix/bin/python'
+let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/mogees/bin/python'
 " let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
