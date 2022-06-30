@@ -161,7 +161,7 @@ term_title() {
 # export CLUSTER_SECRET=be57e85f253b39a0e22e6ec5ceac9cf3a78c61d5dfa92db86b8a602d723663d5
 
 # Urbit
-. /home/pkmital/.nix-profile/etc/profile.d/nix.sh
+# . /home/pkmital/.nix-profile/etc/profile.d/nix.sh
 
 # emscripten
-source "/home/pkmital/dev/urbit-synth/emsdk/emsdk_env.sh"
+# source "/home/pkmital/dev/urbit-synth/emsdk/emsdk_env.sh"
