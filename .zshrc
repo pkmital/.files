@@ -67,10 +67,10 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+if [ -e /home/pkmital/.nix-profile/etc/profile.d/nix.sh ]; then . /home/pkmital/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/usr/lib/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/lib/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/pkmital/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/pkmital/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/usr/lib/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/lib/google-cloud-sdk/completion.zsh.inc'; fi
-if [ -e /home/pkmital/.nix-profile/etc/profile.d/nix.sh ]; then . /home/pkmital/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -f '/Users/pkmital/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/pkmital/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

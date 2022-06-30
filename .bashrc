@@ -107,7 +107,7 @@ PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
-alias open='xdg-open'
+# alias open='xdg-open'
 alias ..='cd ..'
 alias ltr=ltrfunction
 alias l='ls -alhG'
@@ -148,7 +148,7 @@ term_title() {
     echo -ne "\033]0;${@}\007"
 }
 
-. /home/pkmital/anaconda3/etc/profile.d/conda.sh
+# . /home/pkmital/anaconda3/etc/profile.d/conda.sh
 
 # source ~/.winerc
 
@@ -158,7 +158,7 @@ term_title() {
 # export CLUSTER_SECRET=be57e85f253b39a0e22e6ec5ceac9cf3a78c61d5dfa92db86b8a602d723663d5
 
 # Urbit
-. /home/pkmital/.nix-profile/etc/profile.d/nix.sh
+# . /home/pkmital/.nix-profile/etc/profile.d/nix.sh
 
 # emscripten
-source "/home/pkmital/dev/urbit-synth/emsdk/emsdk_env.sh"
+# source "/home/pkmital/dev/urbit-synth/emsdk/emsdk_env.sh"
