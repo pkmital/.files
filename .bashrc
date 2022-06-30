@@ -116,6 +116,9 @@ alias la='ls -AG'
 alias ..='cd ..'
 alias xp='PATH="/usr/lib/xorg:$PATH" xpra start :12'
 alias killmosh='pgrep mosh-server | grep -v $(ps -o ppid --no-headers $$) && xargs kill || echo "no active sessions to kill"'
+alias cpugetavail='cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors'
+alias cpushowcurrent='cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
+alias cpusethigh='echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
 # cat /proc/cpuinfo | grep "^[c]pu MHz" | cut -b 12-18 | paste -sd+ - | bc | awk '{ print $1 / 64 }'"
 
 if [ -f ~/.bash_aliases ]; then
