@@ -3,6 +3,8 @@ execute pathogen#helptags()
 
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'tpope/vim-unimpaired'
+Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
@@ -19,7 +21,6 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'thomasfaingnaert/vim-lsp-snippets'
 Plug 'thomasfaingnaert/vim-lsp-ultisnips'
-Plug 'urbit/hoon.vim'
 call plug#end()
 
 let g:UltiSnipsExpandTrigger="<TAB>"
