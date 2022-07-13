@@ -504,3 +504,5 @@ function! AutoHighlightToggle()
  endif
 endfunction
 
+autocmd User CocOpenFloat call nvim_win_set_config(g:coc_last_float_win, {'relative': 'editor', 'row': 0, 'col': 0})
+autocmd User CocOpenFloat call nvim_win_set_width(g:coc_last_float_win, 9999)
