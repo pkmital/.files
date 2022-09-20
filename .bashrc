@@ -132,7 +132,7 @@ export CUDA_HOME=/usr/local/cuda
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 set show-mode-in-prompt on
 
-export PATH=/home/pkmital/anaconda3/bin:$CUDA_HOME/bin:$PATH:/usr/local/bin
+export PATH=/home/parag/anaconda3/bin:$CUDA_HOME/bin:$PATH:/usr/local/bin
 export MPLBACKEND=Agg
 export DISPLAY=:0
 export MKL_THREADING_LAYER=GNU
@@ -151,17 +151,11 @@ term_title() {
     echo -ne "\033]0;${@}\007"
 }
 
-. /home/pkmital/anaconda3/etc/profile.d/conda.sh
+. /home/parag/anaconda3/etc/profile.d/conda.sh
 
-# source ~/.winerc
+export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# export CLUSTER_SECRET=be57e85f253b39a0e22e6ec5ceac9cf3a78c61d5dfa92db86b8a602d723663d5
-
-# Urbit
-# . /home/pkmital/.nix-profile/etc/profile.d/nix.sh
-
-# emscripten
-# source "/home/pkmital/dev/urbit-synth/emsdk/emsdk_env.sh"
+# for tensorflow 2.x to see GPUs
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/

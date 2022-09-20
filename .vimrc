@@ -290,7 +290,7 @@ let g:ale_fixers = {
 	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
 \}
 " let g:ale_python_flake8_executable = 'python'
-let g:ale_python_flake8_executable = '/home/pkmital/anaconda3/bin/flake8'
+let g:ale_python_flake8_executable = '/home/parag/anaconda3/bin/flake8'
 let g:ale_python_flake8_options = '--ignore=E501,W503,E231,E203,W605 --max-line-length=100'
 let g:ale_open_list = 1
 " let g:ale_keep_list_window_open = 0
@@ -387,7 +387,7 @@ set list
 let g:ycm_auto_hover = ''
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
-let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/mogees38/bin/python'
+let g:ycm_python_binary_path = '/home/parag/anaconda3/envs/tdnast/bin/python'
 " let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
