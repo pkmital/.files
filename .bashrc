@@ -153,6 +153,9 @@ term_title() {
 
 . /home/pkmital/anaconda3/etc/profile.d/conda.sh
 
+# Required for GPU / CUDA / TensorFlow
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
+
 # source ~/.winerc
 
 # export NVM_DIR="$HOME/.nvm"

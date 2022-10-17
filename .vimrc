@@ -387,7 +387,7 @@ set list
 let g:ycm_auto_hover = ''
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
-let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/mogees38/bin/python'
+let g:ycm_python_binary_path = '/home/pkmital/anaconda3/envs/mogees-tf2/bin/python'
 " let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 " let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
