@@ -388,13 +388,8 @@ let g:ycm_auto_hover = ''
 " We dont care about autocomplete
 let g:ycm_auto_trigger = 0
 let g:ycm_python_binary_path = '/home/parag/anaconda3/envs/tdnast/bin/python'
-" let g:ycm_python_binary_path = '/etc/anaconda/3/bin/python'
-" let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
-" let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 let g:ycm_min_num_identifier_candidate_chars = 1000
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
-" let g:ycm_python_binary_path = '/usr/bin/python3'
-" let g:ycm_python_binary_path = '/Users/pkmital/anaconda3/bin/python'
 nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
 nnoremap <leader>d <ESC>:YcmCompleter GetDoc<CR>
 

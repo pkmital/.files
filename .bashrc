@@ -159,3 +159,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # Required for GPU / CUDA / TensorFlow
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
+
+# source ~/.winerc
+# Required for GPU / CUDA / TensorFlow
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
