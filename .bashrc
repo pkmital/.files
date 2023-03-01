@@ -163,3 +163,4 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
 # source ~/.winerc
 # Required for GPU / CUDA / TensorFlow
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
