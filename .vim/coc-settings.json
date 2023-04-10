@@ -22,7 +22,8 @@
   "jedi.hover.disable.keyword.names": [],
   "jedi.hover.disable.keyword.fullNames": [],
   "jedi.workspace.extraPaths": [],
-  "jedi.workspace.environmentPath": "/home/parag/anaconda3/envs/analyzer-beats-v2/bin/python",
+  "jedi.workspace.environmentPath": "/home/parag/anaconda3/envs/pitch_alignment/bin/python",
+  "python.pythonPath": "/home/parag/anaconda3/envs/pitch_alignment/bin/python",
   "jedi.workspace.symbols.maxSymbols": 20,
   "jedi.workspace.symbols.ignoreFolders": [
     ".git",

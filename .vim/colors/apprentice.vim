@@ -35,7 +35,7 @@ endif
 let colors_name = "apprentice"
 
 if ($TERM =~ '256' || &t_Co >= 256) || has("gui_running")
-  hi Normal         ctermbg=235  ctermfg=250  guibg=#202020 guifg=#bcbcbc cterm=NONE           gui=NONE
+  hi Normal         ctermbg=235  ctermfg=250  guibg=#202020 guifg=#dedede cterm=NONE           gui=NONE
   hi LineNr         ctermbg=234  ctermfg=242  guibg=#1c1c1c guifg=#6c6c6c cterm=NONE           gui=NONE
   hi FoldColumn     ctermbg=234  ctermfg=242  guibg=#1c1c1c guifg=#6c6c6c cterm=NONE           gui=NONE
   hi Folded         ctermbg=234  ctermfg=242  guibg=#1c1c1c guifg=#6c6c6c cterm=NONE           gui=NONE
@@ -66,7 +66,7 @@ if ($TERM =~ '256' || &t_Co >= 256) || has("gui_running")
   hi PmenuSel         ctermbg=66   ctermfg=235  guibg=#5f8787 guifg=#262626 cterm=NONE           gui=NONE
   hi PmenuThumb       ctermbg=66   ctermfg=66   guibg=#5f8787 guifg=#5f8787 cterm=NONE           gui=NONE
 
-  hi ErrorMsg         ctermbg=131  ctermfg=235  guibg=#af5f5f guifg=#26bcbc cterm=NONE           gui=NONE
+  hi ErrorMsg         ctermbg=131  ctermfg=235  guibg=#af5f5f guifg=#bcbcbc cterm=NONE           gui=NONE
   hi ModeMsg          ctermbg=108  ctermfg=235  guibg=#87af87 guifg=#bc2626 cterm=NONE           gui=NONE
   hi MoreMsg          ctermbg=NONE ctermfg=66   guibg=NONE    guifg=#5f8787 cterm=NONE           gui=NONE
   hi Question         ctermbg=NONE ctermfg=108  guibg=NONE    guifg=#87af87 cterm=NONE           gui=NONE
