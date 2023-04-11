@@ -24,6 +24,9 @@
   "jedi.workspace.extraPaths": [],
   "jedi.workspace.environmentPath": "/home/parag/anaconda3/envs/pitch_alignment/bin/python",
   "python.pythonPath": "/home/parag/anaconda3/envs/pitch_alignment/bin/python",
+  "python.formatting.blackPath": "/home/parag/anaconda3/bin/black",
+  "python.formatting.provider": "black",
+  "coc.preferences.formatOnSaveFiletypes": ["python"],
   "jedi.workspace.symbols.maxSymbols": 20,
   "jedi.workspace.symbols.ignoreFolders": [
     ".git",
