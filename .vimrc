@@ -3,31 +3,100 @@ execute pathogen#helptags()
 
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 Plug 'tpope/vim-unimpaired'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
+Plug 'josa42/vim-lightline-coc'
 Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-Plug 'thesis/vim-solidity'
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+" Plug 'thesis/vim-solidity'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
+" Plug 'SirVer/ultisnips'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'thomasfaingnaert/vim-lsp-snippets'
+" Plug 'thomasfaingnaert/vim-lsp-ultisnips'
+" Plug 'eliba2/vim-node-inspect'
+" Plug 'tom-doerr/vim_codex'
+Plug 'madox2/vim-ai', { 'do': './install.sh' }
+" Track the engine.
 Plug 'SirVer/ultisnips'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'thomasfaingnaert/vim-lsp-snippets'
-Plug 'thomasfaingnaert/vim-lsp-ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 call plug#end()
 
-let g:UltiSnipsExpandTrigger="<TAB>"
-let g:UltiSnipsJumpForwardTrigger="<TAB>"
-let g:UltiSnipsJumpBackwardTrigger="<S-TAB>"
+" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
+" - https://github.com/Valloric/YouCompleteMe
+" - https://github.com/nvim-lua/completion-nvim
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let g:coc_global_extensions = [
+  \ 'coc-tsserver'
+  \ ]
+if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  let g:coc_global_extensions += ['coc-prettier']
+endif
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+endif
+let g:coc_global_extensions += ['coc-pyright']
+
+nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>d :call CocAction('doHover')<CR>
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <leader>f :call CocAction('format')<cr>
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Register the components:
+let g:lightline = {}
+let g:lightline.component_expand = {
+  \   'linter_warnings': 'lightline#coc#warnings',
+  \   'linter_errors': 'lightline#coc#errors',
+  \   'linter_info': 'lightline#coc#info',
+  \   'linter_hints': 'lightline#coc#hints',
+  \   'linter_ok': 'lightline#coc#ok',
+  \   'status': 'lightline#coc#status',
+  \ }
+
+" Set color to the components:
+let g:lightline.component_type = {
+  \   'linter_warnings': 'warning',
+  \   'linter_errors': 'error',
+  \   'linter_info': 'info',
+  \   'linter_hints': 'hints',
+  \   'linter_ok': 'left',
+  \ }
+
+" Add the components to the lightline:
+let g:lightline.active = {
+  \   'left': [[ 'coc_info', 'coc_hints', 'coc_errors', 'coc_warnings', 'coc_ok' ], [ 'coc_status'  ]]
+  \ }
+" register compoments:
+" call lightline#coc#register()
+
 let g:asyncomplete_auto_completeopt = 0
-set completeopt=menuone,noinsert
+" set completeopt=menuone,noinsert
 
 if executable('hoon-language-server')
     au User lsp_setup call lsp#register_server({
@@ -40,9 +109,6 @@ endif
 colorscheme apprentice
 let mapleader = ","
 
-" Redraw hacks to force refresh
-set lazyredraw
-set ttyfast
 
 " Deferred match parens: https://github.com/andymass/vim-matchup#deferred-highlighting
 let g:matchup_matchparen_deferred = 1
@@ -53,6 +119,7 @@ if &term =~ '256color'
 	" work properly when Vim is used inside tmux and GNU screen.
 	set t_ut=
 endif
+set termguicolors
 
 " Match parens
 set showmatch
@@ -96,12 +163,11 @@ nnoremap <bs> <c-^>
 " FZF
 set rtp+=~/.fzf
 set rtp+=/usr/local/opt/fzf
-set rtp+=/usr/local/bin/ctags
-command! MakeTags silent !ctags -R --exclude=/git --exclude=node_modules .
+" command! MakeTags silent !ctags -R --exclude=/git --exclude=node_modules .
 nnoremap <C-p> :Files<CR>
-nnoremap <C-t> :Tags<CR>
+" nnoremap <C-t> :Tags<CR>
 nnoremap <leader><tab> :BLines<CR>
-nnoremap <leader>q :BTags<CR>
+" nnoremap <leader>q :BTags<CR>
 " command! -bang -nargs=* Rg
 "   \ call fzf#vim#grep(
 "   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
@@ -134,8 +200,8 @@ let g:pydocstring_templates_dir = '~/.vim/bundle/vim-pydocstring/test/templates/
 nmap <silent> <C-_> <Plug>(pydocstring)
 
 " Buffer back/forward like C-o and C-I
-nmap <leader>r :bp<CR>
-nmap <leader>f :bn<CR>
+" nmap <leader>r :bp<CR>
+" nmap <leader>f :bn<CR>
 
 " GFM
 let g:vim_markdown_preview_browser='Google Chrome'
@@ -162,14 +228,14 @@ nnoremap <leader>k :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$', '\.ipynb$', '\.png$', '\.jpeg$', '\.jpg$', '\.JPEG$', '\.JPG$', '\.pkl$', '\.ckpt$']
 
 " TagBar
-nnoremap <F8> :TagbarToggle<CR>
-let g:tagbar_compact = 1
-let g:tagbar_show_linenumbers = 1
-let g:tagbar_autopreview = 0
-let g:tagbar_sort = 0
-let g:tagbar_autofocus = 1
-let g:tagbar_autoclose = 1
-set previewheight=25
+" nnoremap <F8> :TagbarToggle<CR>
+" let g:tagbar_compact = 1
+" let g:tagbar_show_linenumbers = 1
+" let g:tagbar_autopreview = 0
+" let g:tagbar_sort = 0
+" let g:tagbar_autofocus = 1
+" let g:tagbar_autoclose = 1
+" set previewheight=25
 
 " Folding for Python; should move this to ftplugin
 nnoremap <space> za
@@ -190,10 +256,9 @@ function! NextClosedFold(dir)
     endif
 endfunction
 
-" YAPF
-nnoremap <leader>L :call Yapf("--style='{based_on_style: facebook, coalesce_brackets: true}'")<CR>
-" Line Numbers
+" Hybrid Line Numbers
 set nu
+" set number relativenumber
 
 "  Yank/Paste clipboard
 " nnoremap <C-y> "+y
@@ -215,7 +280,8 @@ nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>:set 
 
 " Clear highlighting on ESC in normal
 " nnoremap <esc> :noh<return>:SyntasticReset<return>:ALEReset<return>:cclose<return><esc>
-nnoremap <esc> :noh<return>:ALEReset<return>:cclose<return>:pclose<return><esc>
+" nnoremap <esc> :noh<return>:ALEReset<return>:cclose<return>:pclose<return><esc>
+nnoremap <esc> :noh<return>:cclose<return>:pclose<return><esc>
 nnoremap <esc>^[ <esc>^[
 
 " Seems criminal but...
@@ -224,11 +290,6 @@ nnoremap <esc>^[ <esc>^[
 " Vim Slimeness
 let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
-
-" Airline
-" let g:airline_theme='molokai'
-" let g:airline_left_sep=''
-" let g:airline_right_sep=''
 
 " Vim Markdown conceals stuff. Don't.  Also don't fold.
 " set nofoldenable
@@ -244,7 +305,7 @@ au BufRead *.md setlocal spell
 au BufRead *.mdown setlocal spell
 
 " Python highlighting
-" let g:python_highlight_all = 1
+let g:python_highlight_all = 1
 
 " Goyo Distraction free editing
 let g:goyo_height = '100%'
@@ -275,70 +336,39 @@ set fillchars=vert:│    " that's a vertical box-drawing character
 " UTF-8
 set encoding=utf-8
 
-" ALE
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '(%code%): %s' " '[%linter%] %s [%severity%]'
-let g:ale_python_pycodestyle_options = '--max-line-length 90'
-let g:ale_linters = {
-	\   'python': ['flake8']
-	\}
-let g:ale_fixers = {
-	\   'javascript': ['eslint'],
-	\   'json': ['fixjson'],
-	\   'python': ['black'],
-	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
-\}
-" let g:ale_python_flake8_executable = 'python'
-let g:ale_python_flake8_executable = '/home/parag/anaconda3/bin/flake8'
-let g:ale_python_flake8_options = '--ignore=E501,W503,E231,E203,W605 --max-line-length=100'
-let g:ale_open_list = 1
-" let g:ale_keep_list_window_open = 0
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_enter = 0
-nnoremap <leader>l :ALELint<CR>
-nnoremap <leader>L :ALEFix<CR>
+" " ALE
+" let g:ale_echo_msg_error_str = 'E'
+" let g:ale_echo_msg_warning_str = 'W'
+" let g:ale_echo_msg_format = '(%code%): %s' " '[%linter%] %s [%severity%]'
+" let g:ale_python_pycodestyle_options = '--max-line-length 90'
+" let g:ale_linters = {
+" 	\'python': ['flake8'],
+" 	\'javascript': ['eslint'],
+" 	\}
+" let g:ale_fixers = {
+" 	\   'javascript': ['eslint'],
+" 	\   'json': ['fixjson'],
+" 	\   'python': ['black'],
+" 	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
+" \}
+" " let g:ale_python_flake8_executable = 'python'
+" let g:ale_python_flake8_executable = '/home/parag/anaconda3/bin/flake8'
+" let g:ale_python_flake8_options = '--ignore=E501,W503,E231,E203,W605 --max-line-length=100'
+" let g:ale_open_list = 1
+" " let g:ale_keep_list_window_open = 0
+" let g:ale_lint_on_save = 1
+" let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_insert_leave = 0
+" let g:ale_lint_on_enter = 0
+" nnoremap <leader>l :ALELint<CR>
+" nnoremap <leader>L :ALEFix<CR>
 
-" YAPF
-" autocmd FileType python nnoremap <buffer><Leader>L :<C-u>Yapf<CR>
-" let g:yapf#extra_args='--style="{based_on_style: facebook, indent_width: 4}"'
-" let g:yapf#code_style='facebook'
-" autocmd FileType python nnoremap <buffer><leader>L :0,$!yapf --style="{based_on_style: google}"<Cr><C-o>
+" C++
 autocmd FileType cpp nnoremap <buffer><leader>L :ClangFormat<Cr><C-o>
-" if you don't want linters to run on opening a file
-" let g:ale_lint_on_enter = 0<Paste>
-
-
-" Syntastic Error/Warn
-" let g:syntastic_python_checkers = ['python', 'flake8']
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_aggregate_errors = 1
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_python_ignore_errors = ['E501']
-" nnoremap <leader>r :SyntasticReset<CR>
 
 " Javascript
 let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0
-
-" Markdown Ctag
-nnoremap <leader>c <ESC>:!ctags -R --exclude=/git --exclude=node_modules .<CR>
-let g:tagbar_type_markdown = {
-			\ 'ctagstype' : 'markdown',
-			\ 'kinds' : [
-			\ 'h:headings',
-			\ 'l:links',
-			\ 'i:images'
-			\ ],
-			\ "sort" : 0
-			\ }
 
 " UndoTree
 nnoremap <leader>u <ESC>:UndotreeToggle<cr>
@@ -347,19 +377,8 @@ let g:undotree_HighlightSyntaxAdd = "DiffAdd"
 let g:undotree_HighlightSyntaxChange = "DiffChange"
 let g:undotree_WindowLayout = 2
 
-let g:lightline = {
-			\ 'colorscheme': 'jellybeans',
-			\ }
-"" tabs
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-"let g:airline#extensions#tabline#right_alt_sep = ''
-"
-"" configure the minimum number of tabs needed to show the tabline.
-"let g:airline#extensions#tabline#tab_min_count = 2
-"let g:airline#extensions#tabline#show_buffers = 0
-"
+let g:lightline = {'colorscheme': 'jellybeans'}
+
 "" tab shortcuts
 nnoremap <C-b>  :tabprevious<CR>
 nnoremap <C-B>  :tabnext<CR>
@@ -380,28 +399,6 @@ autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
 set listchars=tab:\|\
 set list
-
-" YouCompleteMe
-" let g:ycm_echo_current_diagnostic = 0
-" Don't cate about popup on overss
-let g:ycm_auto_hover = ''
-" We dont care about autocomplete
-let g:ycm_auto_trigger = 0
-let g:ycm_python_binary_path = '/home/parag/anaconda3/envs/tdnast/bin/python'
-let g:ycm_min_num_identifier_candidate_chars = 1000
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
-nnoremap <leader>g <ESC>:YcmCompleter GoTo<CR>
-nnoremap <leader>d <ESC>:YcmCompleter GetDoc<CR>
-
-" These didn't seem to help w/ my issues w/ markdown + tmux
-" au FileWritePost * :redraw!
-" au TermResponse * :redraw!
-" au TextChanged * :redraw!
-" au QuickFixCmdPre * :redraw!
-" au QuickFixCmdPost * :redraw!
-
-" Grammarous
-nnoremap <leader>z <ESC>:GrammarousCheck<CR>
 
 " Last place editing
 if has("autocmd")
@@ -425,57 +422,13 @@ set timeoutlen=1000 ttimeoutlen=0
 " Tired of lowercasing stuff by mistake
 vnoremap u :noh<cr>
 
-"let g:indent_guides_enable_on_vim_startup = 1
-"let g:indent_guides_start_level = 2
-"let g:indent_guides_guide_size = 1
-"hi IndentGuidesOdd  ctermbg=grey
-"hi IndentGuidesEven ctermbg=darkgrey
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+hi IndentGuidesOdd  ctermbg=grey
+hi IndentGuidesEven ctermbg=darkgrey
 let g:indentLine_char = '┆'
-"'▏'
-"'︳'
-"
-" Lightline ALE
-let g:lightline.component_expand = {
-			\  'linter_warnings': 'lightline#ale#warnings',
-			\  'linter_errors': 'lightline#ale#errors',
-			\  'linter_ok': 'lightline#ale#ok',
-			\ }
-let g:lightline.component_type = {
-			\     'linter_warnings': 'warning',
-			\     'linter_errors': 'error',
-			\ }
-let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
-" let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
 
-let g:ycm_enable_autocmd_on_diagnostic_change = 1
-" Lightline YCM
-"      \  'linter_warnings': 'youcompleteme#GetWarningCount()',
-"      \  'linter_errors': 'youcompleteme#GetErrorCount()',
-
-" let g:lightline.component_expand = {
-"       \  'linter_errors': 'ale#statusline#Count(bufnr('')).error'
-"       \ }
-let g:lightline.active = {
-			\   'right': [ [ 'lineinfo' ],
-			\              [ 'percent' ],
-			\              [ 'fileformat', 'fileencoding', 'filetype' ],
-			\              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ] }
-
-" Conque
-" let g:ConqueTerm_Color = 2         " 1: strip color after 200 lines, 2: always with color
-" let g:ConqueTerm_CloseOnEnd = 1    " close conque when program ends running
-" let g:ConqueTerm_StartMessages = 0 " display warning messages if conqueTerm is configured incorrectly  
-"
-" vim-multiple-cursors Setup {{{
-function! Multiple_cursors_before()
-	call youcompleteme#DisableCursorMovedAutocommands()
-endfunction
-
-function! Multiple_cursors_after()
-	call youcompleteme#EnableCursorMovedAutocommands()
-endfunction
-" }}}
-"
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
 " Type z/ to toggle highlighting on/off.
@@ -499,7 +452,34 @@ function! AutoHighlightToggle()
  endif
 endfunction
 
-" Enable popups from CoC to blend
-" autocmd vimrc User CocOpenFloat call setwinvar(g:coc_last_float_win, "&winblend", 20)
-autocmd User CocOpenFloat call nvim_win_set_config(g:coc_last_float_win, {'relative': 'editor', 'row': 0, 'col': 0})
-autocmd User CocOpenFloat call nvim_win_set_width(g:coc_last_float_win, 9999)
+" Indent line hides quotes in json files
+let g:indentLine_fileTypeExclude = ['json']
+let g:vim_json_syntax_conceal = 0
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+
+" gitgutter updates
+set updatetime=1
+
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" codex
+nnoremap  <C-x> :CreateCompletion<CR>
+inoremap  <C-x> <Esc>li<C-g>u<Esc>l:CreateCompletion<CR>
+
+" Redraw hacks to force refresh
+set lazyredraw
+set ttyfast
+
+" Force reload files
+set autoread
+
+" Italize documentation
+highlight Comment cterm=italic gui=italic
