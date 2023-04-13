@@ -114,6 +114,8 @@ alias l='ls -alhG'
 alias ll='ls -alFG'
 alias la='ls -AG'
 alias ..='cd ..'
+alias vi="nvim"
+alias vim="nvim"
 alias xp='PATH="/usr/lib/xorg:$PATH" xpra start :12'
 alias killmosh='pgrep mosh-server | grep -v $(ps -o ppid --no-headers $$) && xargs kill || echo "no active sessions to kill"'
 alias cpugetavail='cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors'
