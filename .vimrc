@@ -5,12 +5,14 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 Plug 'tpope/vim-unimpaired'
+Plug 'airblade/vim-gitgutter'
 " Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'josa42/vim-lightline-coc'
 Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
@@ -21,29 +23,17 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
-" Plug 'SirVer/ultisnips'
 " Plug 'prabirshrestha/asyncomplete.vim'
 " Plug 'prabirshrestha/async.vim'
 " Plug 'prabirshrestha/vim-lsp'
 " Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" Plug 'thomasfaingnaert/vim-lsp-snippets'
-" Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 " Plug 'eliba2/vim-node-inspect'
 " Plug 'tom-doerr/vim_codex'
-Plug 'madox2/vim-ai', { 'do': './install.sh' }
-" Track the engine.
-Plug 'SirVer/ultisnips'
+" Plug 'madox2/vim-ai', { 'do': './install.sh' }
 " Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+"Plug 'honza/vim-snippets'
+Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
 call plug#end()
-
-" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
-" - https://github.com/Valloric/YouCompleteMe
-" - https://github.com/nvim-lua/completion-nvim
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 let g:coc_global_extensions = [
   \ 'coc-tsserver'
@@ -163,17 +153,17 @@ nnoremap <bs> <c-^>
 " FZF
 set rtp+=~/.fzf
 set rtp+=/usr/local/opt/fzf
-" command! MakeTags silent !ctags -R --exclude=/git --exclude=node_modules .
+command! MakeTags silent !ctags -R --exclude=/git --exclude=node_modules .
 nnoremap <C-p> :Files<CR>
-" nnoremap <C-t> :Tags<CR>
+nnoremap <C-t> :Tags<CR>
 nnoremap <leader><tab> :BLines<CR>
-" nnoremap <leader>q :BTags<CR>
-" command! -bang -nargs=* Rg
-"   \ call fzf#vim#grep(
-"   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
-"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-"   \   <bang>0)
+nnoremap <leader>q :BTags<CR>
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
 command! -bang -nargs=* Fd
 			\ call fzf#vim#ag(<q-args>,
 			\                 <bang>0 ? fzf#vim#with_preview('up:40%')
@@ -275,8 +265,8 @@ inoremap <silent> <Down> <ESC><Down>
 inoremap jj <Esc>
 
 " Toggle gutter shit
-nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:IndentLinesToggle<CR>:set nofoldenable<CR>
-nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:IndentLinesToggle<CR>:set foldenable<CR>
+nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:set nofoldenable<CR>
+nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:set foldenable<CR>
 
 " Clear highlighting on ESC in normal
 " nnoremap <esc> :noh<return>:SyntasticReset<return>:ALEReset<return>:cclose<return><esc>
@@ -460,6 +450,11 @@ let g:vim_markdown_conceal_code_blocks = 0
 
 " gitgutter updates
 set updatetime=1
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '>'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_removed_first_line = '^'
+let g:gitgutter_sign_modified_removed = '<'
 
 if has('nvim-0.4.0') || has('patch-8.2.0750')
   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -483,3 +478,5 @@ set autoread
 
 " Italize documentation
 highlight Comment cterm=italic gui=italic
+
+set mouse=
