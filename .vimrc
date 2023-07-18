@@ -30,9 +30,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> <leader>f :call CocAction('format')<cr>
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+nnoremap <silent> <leader>f  :call CocAction('format')<cr>
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
 let g:asyncomplete_auto_completeopt = 0
 " set completeopt=menuone,noinsert
@@ -454,19 +454,6 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-" Disable python2 support
-let g:loaded_python_provider = 0
-
-" Don't enable explicitly python3 it doesn't work and disables python3
-" this only works for DISABLE, python3 is enabled by default
-" let g:loaded_python3_provider = 1
-
-" set the route of the executable
-let g:python3_host_prog = '/usr/local/bin/python3'
-
-" Explicitly tells to neovim use python3 when evaluate python code
-set pyxversion=3
 
 " Dont care about fold columns
 set foldcolumn=0
