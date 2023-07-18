@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "coc-tsserver": ">=2.1.3",
-    "coc-pyright": ">=1.1.316"
+    "coc-pyright": ">=1.1.316",
+    "coc-python": ">=1.2.13",
+    "coc-json": ">=1.8.0",
+    "coc-snippets": ">=3.1.6"
   }
 }

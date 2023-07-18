@@ -7,8 +7,6 @@ Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build'
 Plug 'tpope/vim-unimpaired'
 Plug 'airblade/vim-gitgutter'
 " Plug 'dense-analysis/ale'
-Plug 'itchyny/lightline.vim'
-Plug 'josa42/vim-lightline-coc'
 Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -43,18 +41,6 @@ call plug#end()
 let g:indent_blankline_enabled = v:true
 
 set background=dark
-
-let g:coc_global_extensions = [
-  \ 'coc-tsserver'
-  \ ]
-if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
-  let g:coc_global_extensions += ['coc-prettier']
-endif
-
-if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
-  let g:coc_global_extensions += ['coc-eslint']
-endif
-let g:coc_global_extensions += ['coc-pyright']
 
 nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
@@ -600,7 +586,7 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 " Add (Neo)Vim's native statusline support
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics
@@ -619,22 +605,6 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-let g:lightline = {
-  \   'colorscheme': 'jellybeans',
-  \   'active': {
-  \     'left': [ [ 'mode', 'paste' ],
-  \               [ 'coc_info', 'coc_hints', 'coc_errors', 'coc_warnings', 'coc_ok' ],
-  \               [ 'coc_status' ],
-  \               [ 'readonly', 'filename', 'modified' ]]
-  \   }
-  \ }
-
-" register compoments:
-call lightline#coc#register()
-
-" Use autocmd to force lightline update.
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 " Disable python2 support
 let g:loaded_python_provider = 0
