@@ -6,35 +6,17 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 Plug 'tpope/vim-unimpaired'
 Plug 'airblade/vim-gitgutter'
-" Plug 'dense-analysis/ale'
 Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'Yggdroot/indentLine'
-" Plug 'nathanaelkane/vim-indent-guides'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'yaocccc/nvim-hlchunk'
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Plug 'junegunn/fzf.vim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
 Plug 'preservim/nerdtree'
-" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-" Plug 'thesis/vim-solidity'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" Plug 'eliba2/vim-node-inspect'
-" Plug 'tom-doerr/vim_codex'
-" Plug 'madox2/vim-ai', { 'do': './install.sh' }
-" Snippets are separated from the engine. Add this if you want them:
-"Plug 'honza/vim-snippets'
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
 call plug#end()
 

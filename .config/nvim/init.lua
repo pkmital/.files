@@ -5,6 +5,28 @@ let &packpath = &runtimepath
 source ~/.vimrc
 ]])
 
+require('packer').startup(function()
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
+
+    use {'vim-airline/vim-airline', 'vim-airline/vim-airline-themes'}
+
+    -- Telescope settings (replacing ctrlp.vim)
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+            {'nvim-telescope/telescope-fzy-native.nvim', run = 'make' }
+        }
+    }
+
+    use 'tpope/vim-surround'
+    use {'neoclide/coc.nvim', branch = 'release'}
+    use 'tpope/vim-commentary'
+end)
+
+
+
 require("indent_blankline").setup {
     -- for example, context is off by default, use this to turn it on
     show_current_context = true,
