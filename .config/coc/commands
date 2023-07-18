@@ -1,1 +1,5 @@
-pyright.version
+workspace.showOutput
+workspace.showOutput
+workspace.showOutput
+python.runLinting
+pyright.restartserver
