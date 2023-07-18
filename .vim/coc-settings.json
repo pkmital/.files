@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "jedi.enable": true,
   "jedi.startupMessage": false,
   "jedi.markupKindPreferred": "plaintext",
@@ -25,16 +26,25 @@
   "jedi.workspace.environmentPath": "/home/pkmital/anaconda3/envs/dev/bin/python",
   "python.pythonPath": "/home/pkmital/anaconda3/envs/dev/bin/python",
   "python.formatting.blackPath": "/home/pkmital/anaconda3/envs/dev/bin/black",
+=======
+  "python.pythonPath": "/home/parag/anaconda3/envs/pitch_alignment/bin/python",
+  "python.formatting.blackPath": "/home/parag/anaconda3/bin/black",
+  "python.formatting.blackArgs": ["--diff", "--quiet", "--fast"],
+>>>>>>> 8fcec1e46247ce1fbe48574b6623fc8ef025d519
   "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.jediEnabled": false,
+  "languageserver": {
+    "python": {
+      "formatting": {
+        "provider": "black"
+     },
+   "black": {
+     "enabled": true
+    }
+   }
+  },
   "coc.preferences.formatOnSaveFiletypes": ["python"],
-  "jedi.workspace.symbols.maxSymbols": 20,
-  "jedi.workspace.symbols.ignoreFolders": [
-    ".git",
-    ".nox",
-    ".tox",
-    ".venv",
-    "__pycache__",
-    "venv"
-  ],
   "inlayHint.enable": false
 }

@@ -107,7 +107,7 @@ PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
-alias open='xdg-open'
+# alias open='xdg-open'
 alias ..='cd ..'
 alias ltr=ltrfunction
 alias l='ls -alhG'
@@ -153,8 +153,9 @@ term_title() {
     echo -ne "\033]0;${@}\007"
 }
 
-. /home/parag/anaconda3/etc/profile.d/conda.sh
-
+# . /home/pkmital/anaconda3/etc/profile.d/conda.sh
+# . /home/parag/anaconda3/etc/profile.d/conda.sh
+# . /Users/pkmital/anaconda3/etc/profile.d/conda.sh
 export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -166,3 +167,38 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
 # Required for GPU / CUDA / TensorFlow
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+
+# JINA_CLI_BEGIN
+
+## autocomplete
+_jina() {
+  COMPREPLY=()
+  local word="${COMP_WORDS[COMP_CWORD]}"
+
+  if [ "$COMP_CWORD" -eq 1 ]; then
+    COMPREPLY=( $(compgen -W "$(jina commands)" -- "$word") )
+  else
+    local words=("${COMP_WORDS[@]}")
+    unset words[0]
+    unset words[$COMP_CWORD]
+    local completions=$(jina completions "${words[@]}")
+    COMPREPLY=( $(compgen -W "$completions" -- "$word") )
+  fi
+}
+
+complete -F _jina jina
+
+# session-wise fix
+ulimit -n 4096
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+# default workspace for Executors
+
+# JINA_CLI_END
+
+
+
+
+
+
+
