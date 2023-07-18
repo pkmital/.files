@@ -215,8 +215,8 @@ inoremap <silent> <Down> <ESC><Down>
 inoremap jj <Esc>
 
 " Toggle gutter shit
-nnoremap <F5> <esc>:SignifyDisable<CR>:set nonumber<CR>:set nofoldenable<CR>
-nnoremap <F6> <esc>:SignifyDisable<CR>:set number<CR>:set foldenable<CR>
+nnoremap <F5> <esc>:set nonumber<CR>:set nofoldenable<CR>
+nnoremap <F6> <esc>:set number<CR>:set foldenable<CR>
 
 " Clear highlighting on ESC in normal
 " nnoremap <esc> :noh<return>:SyntasticReset<return>:ALEReset<return>:cclose<return><esc>
