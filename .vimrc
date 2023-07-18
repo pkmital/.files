@@ -2,7 +2,6 @@ execute pathogen#infect()
 execute pathogen#helptags()
 
 call plug#begin('~/.vim/plugged')
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 Plug 'tpope/vim-unimpaired'
 Plug 'airblade/vim-gitgutter'
@@ -46,9 +45,7 @@ if executable('hoon-language-server')
         \ })
 endif
 
-colorscheme apprentice
 let mapleader = ","
-
 
 " Deferred match parens: https://github.com/andymass/vim-matchup#deferred-highlighting
 let g:matchup_matchparen_deferred = 1
@@ -97,52 +94,6 @@ nnoremap \ :Ag<SPACE>
 " Navigate buffers
 nnoremap <bs> <c-^>
 
-" Light cursor column
-" set cursorcolumn
-
-" FZF
-set rtp+=~/.fzf
-set rtp+=/usr/local/opt/fzf
-command! MakeTags silent !ctags -R --exclude=/git --exclude=node_modules .
-nnoremap <C-p> :Files<CR>
-nnoremap <C-t> :Tags<CR>
-nnoremap <leader><tab> :BLines<CR>
-nnoremap <leader>q :BTags<CR>
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-command! -bang -nargs=* Fd
-			\ call fzf#vim#ag(<q-args>,
-			\                 <bang>0 ? fzf#vim#with_preview('up:40%')
-			\                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-			\                 <bang>0)
-command! -bang -nargs=? -complete=dir Files
-			\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-let g:fzf_history_dir = '~/.local/share/fzf-history'
-let g:fzf_colors =
-			\ { 'fg':      ['fg', 'Normal'],
-			\ 'bg':      ['bg', 'Normal'],
-			\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-			\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-			\ 'info':    ['fg', 'PreProc'],
-			\ 'border':  ['fg', 'Ignore'],
-			\ 'prompt':  ['fg', 'Conditional'],
-			\ 'pointer': ['fg', 'Exception'],
-			\ 'marker':  ['fg', 'Keyword'],
-			\ 'spinner': ['fg', 'Label'],
-			\ 'header':  ['fg', 'Comment'] }
-
-" PyDocString
-let g:pydocstring_templates_dir = '~/.vim/bundle/vim-pydocstring/test/templates/numpy'
-nmap <silent> <C-_> <Plug>(pydocstring)
-
-" Buffer back/forward like C-o and C-I
-" nmap <leader>r :bp<CR>
-" nmap <leader>f :bn<CR>
-
 " GFM
 let g:vim_markdown_preview_browser='Google Chrome'
 let g:vim_markdown_preview_github=1
@@ -157,9 +108,6 @@ endif
 vmap <leader>y :w! /tmp/vitmp<CR>
 nmap <leader>p :r! cat /tmp/vitmp<CR>
 
-" Create session, continue w/ vim -S
-" nnoremap <leader>s :mksession<CR>
-"
 " Git blame for current line
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
@@ -167,44 +115,11 @@ nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 nnoremap <leader>k :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$', '\.ipynb$', '\.png$', '\.jpeg$', '\.jpg$', '\.JPEG$', '\.JPG$', '\.pkl$', '\.ckpt$']
 
-" TagBar
-" nnoremap <F8> :TagbarToggle<CR>
-" let g:tagbar_compact = 1
-" let g:tagbar_show_linenumbers = 1
-" let g:tagbar_autopreview = 0
-" let g:tagbar_sort = 0
-" let g:tagbar_autofocus = 1
-" let g:tagbar_autoclose = 1
-" set previewheight=25
-
-" Folding for Python; should move this to ftplugin
-nnoremap <space> za
-vnoremap <space> zf
-nnoremap <silent> <leader>zj :call NextClosedFold('j')<cr>
-nnoremap <silent> <leader>zk :call NextClosedFold('k')<cr>
-function! NextClosedFold(dir)
-    let cmd = 'norm!z' . a:dir
-    let view = winsaveview()
-    let [l0, l, open] = [0, view.lnum, 1]
-    while l != l0 && open
-        exe cmd
-        let [l0, l] = [l, line('.')]
-        let open = foldclosed(l) < 0
-    endwhile
-    if open
-        call winrestview(view)
-    endif
-endfunction
-
 " Hybrid Line Numbers
 set nu
 " set number relativenumber
 
 "  Yank/Paste clipboard
-" nnoremap <C-y> "+y
-" vnoremap <C-y> "+y
-" nnoremap <C-p> "+gP
-" vnoremap <C-p> "+gP
 set pastetoggle=<F2>
 
 " Move to normal mode when using arrows
@@ -219,13 +134,8 @@ nnoremap <F5> <esc>:set nonumber<CR>:set nofoldenable<CR>
 nnoremap <F6> <esc>:set number<CR>:set foldenable<CR>
 
 " Clear highlighting on ESC in normal
-" nnoremap <esc> :noh<return>:SyntasticReset<return>:ALEReset<return>:cclose<return><esc>
-" nnoremap <esc> :noh<return>:ALEReset<return>:cclose<return>:pclose<return><esc>
 nnoremap <esc> :noh<return>:cclose<return>:pclose<return><esc>
 nnoremap <esc>^[ <esc>^[
-
-" Seems criminal but...
-" set mouse=a
 
 " Vim Slimeness
 let g:slime_target = "tmux"
@@ -236,9 +146,6 @@ let g:slime_python_ipython = 1
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_fenced_languages = ['bash=sh', 'shell=sh', 'c++=cpp', 'viml=vim', 'ini=dosini']
-
-" Pandoc
-" let g:pandoc#syntax#conceal#use = 0
 
 " Enable spell checking for markdown files
 au BufRead *.md setlocal spell
@@ -276,33 +183,6 @@ set fillchars=vert:│    " that's a vertical box-drawing character
 " UTF-8
 set encoding=utf-8
 
-" " ALE
-" let g:ale_echo_msg_error_str = 'E'
-" let g:ale_echo_msg_warning_str = 'W'
-" let g:ale_echo_msg_format = '(%code%): %s' " '[%linter%] %s [%severity%]'
-" let g:ale_python_pycodestyle_options = '--max-line-length 90'
-" let g:ale_linters = {
-" 	\'python': ['flake8'],
-" 	\'javascript': ['eslint'],
-" 	\}
-" let g:ale_fixers = {
-" 	\   'javascript': ['eslint'],
-" 	\   'json': ['fixjson'],
-" 	\   'python': ['black'],
-" 	\   'cpp': ['clang-format', 'remove_trailing_lines', 'trim_whitespace']
-" \}
-" " let g:ale_python_flake8_executable = 'python'
-" let g:ale_python_flake8_executable = '/home/parag/anaconda3/bin/flake8'
-" let g:ale_python_flake8_options = '--ignore=E501,W503,E231,E203,W605 --max-line-length=100'
-" let g:ale_open_list = 1
-" " let g:ale_keep_list_window_open = 0
-" let g:ale_lint_on_save = 1
-" let g:ale_lint_on_text_changed = 'never'
-" let g:ale_lint_on_insert_leave = 0
-" let g:ale_lint_on_enter = 0
-" nnoremap <leader>l :ALELint<CR>
-" nnoremap <leader>L :ALEFix<CR>
-
 " C++
 autocmd FileType cpp nnoremap <buffer><leader>L :ClangFormat<Cr><C-o>
 
@@ -335,9 +215,6 @@ autocmd FileType html,markdown,text nnoremap <expr> k v:count ? 'k' : 'gk'
 autocmd FileType html,markdown,text vnoremap <expr> j v:count ? 'j' : 'gj'
 autocmd FileType html,markdown,text vnoremap <expr> k v:count ? 'k' : 'gk'
 
-" set listchars=tab:\|\
-" set list
-
 " Last place editing
 if has("autocmd")
 	au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -351,9 +228,6 @@ vnoremap <leader>t <ESC>:set ts=2 noet<CR>:'<,'>retab!<CR>:set et ts=4<CR>:'<,'>
 nnoremap <leader>T <ESC>:set ts=4 noet<CR>:retab!<CR>:set et ts=2<CR>:retab<CR>
 vnoremap <leader>T <ESC>:set ts=4 noet<CR>:'<,'>retab!<CR>:set et ts=2<CR>:'<,'>retab<CR>
 
-" Turn off automatic visual selection w/ mouse
-set mouse-=a
-
 " Delays
 set timeoutlen=1000 ttimeoutlen=0
 
@@ -361,9 +235,6 @@ set timeoutlen=1000 ttimeoutlen=0
 vnoremap u :noh<cr>
 
 let g:indent_guides_enable_on_vim_startup = 1
-" let g:indent_guides_start_level = 2
-" let g:indent_guides_guide_size = 1
-" let g:indentLine_char = '┆'
 
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
@@ -410,10 +281,6 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
-
-" codex
-nnoremap  <C-x> :CreateCompletion<CR>
-inoremap  <C-x> <Esc>li<C-g>u<Esc>l:CreateCompletion<CR>
 
 " Redraw hacks to force refresh
 set lazyredraw
@@ -600,3 +467,6 @@ let g:python3_host_prog = '/usr/local/bin/python3'
 
 " Explicitly tells to neovim use python3 when evaluate python code
 set pyxversion=3
+
+" Dont care about fold columns
+set foldcolumn=0
