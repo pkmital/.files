@@ -64,9 +64,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> <leader>f :call CocAction('format')<cr>
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+nnoremap <silent> <leader>f  :call CocAction('format')<cr>
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
 " Register the components:
 let g:lightline = {}
@@ -483,3 +483,5 @@ set autoread
 
 " Italize documentation
 highlight Comment cterm=italic gui=italic
+
+let g:python3_host_prog = '/home/pkmital/anaconda3/bin/python'
