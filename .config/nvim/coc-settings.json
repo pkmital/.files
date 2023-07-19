@@ -2,11 +2,13 @@
   "javascript.suggest.names": false,
   "snippets.ultisnips.pythonPrompt": false,
   "python.linting.enabled": true,
-  "python.linting.pylintEnabled": true,
-  "python.pythonPath": "/Users/pkmital/anaconda3/envs/kimchi-pavillion/bin/python",
-  "python.venvPath": "/Users/pkmital/anaconda3/envs",
+  "python.linting.pylintEnabled": false,
+  "python.linting.mypyEnabled": true,
+  "python.linting.flake8Enabled": false,
+  "python.pythonPath": "/home/parag/anaconda3/envs/alignment/bin/python",
+  "python.venvPath": "/home/parag/anaconda3/envs",
   "python.formatting.provider": "black",
-  "python.formatting.blackPath": "/Users/pkmital/anaconda3/envs/kimchi-pavillion/bin/black",
+  "python.formatting.blackPath": "/home/parag/anaconda3/envs/alignment/bin/black",
   "inlayHint.enable": false,
   "python.linting.lintOnSave": true
 }

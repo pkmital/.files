@@ -24,7 +24,7 @@ let g:indent_blankline_enabled = v:true
 set background=dark
 
 " Set the python interpreter
-nnoremap <leader>i :call CocCommand python.setInterpreter<CR>
+nnoremap <silent> <leader>i :call CocCommand python.setInterpreter<CR>
 " Coc mappings
 nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
@@ -466,3 +466,14 @@ else
   let s:current_python_path=$CONDA_PREFIX.'/bin/python'
 endif
 call coc#config('python', {'pythonPath': s:current_python_path})
+
+let conda_default_env = $CONDA_DEFAULT_ENV
+if conda_default_env == 'base'
+  let env_name = 'neovim'
+else
+  let env_name = conda_default_env
+endif
+let bin_python = expand('~') . '/anaconda3/envs/' . env_name . '/bin/python'
+if filereadable(bin_python)
+  let g:python3_host_prog = bin_python
+endif

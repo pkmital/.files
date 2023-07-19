@@ -134,7 +134,7 @@ export CUDA_HOME=/usr/local/cuda
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 set show-mode-in-prompt on
 
-export PATH=/home/parag/dev/google-cloud-sdk/bin:/home/parag/anaconda3/bin:$CUDA_HOME/bin:$PATH:/usr/local/bin
+export PATH=/home/parag/dev/google-cloud-sdk/bin:/home/parag/anaconda3/bin:$CUDA_HOME/bin:/usr/local/bin:$PATH
 export MPLBACKEND=Agg
 export DISPLAY=:0
 export MKL_THREADING_LAYER=GNU

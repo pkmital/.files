@@ -1,3 +1,5 @@
+pyright.singleTest
+pyright.organizeimports
 python.setInterpreter
 workspace.showOutput
 workspace.showOutput
