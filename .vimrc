@@ -24,7 +24,7 @@ let g:indent_blankline_enabled = v:true
 set background=dark
 
 " Set the python interpreter
-nmap <silent> <leader>i :call CocCommand python.setInterpreter<CR>
+nnoremap <leader>i :call CocCommand python.setInterpreter<CR>
 " Coc mappings
 nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
@@ -33,9 +33,13 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nnoremap <silent> <leader>f  :call CocAction('format')<cr>
+nnoremap <silent> <space>f :!black %<cr>
 " xmap <leader>f  <Plug>(coc-format-selected)
 " nmap <leader>f  <Plug>(coc-format-selected)
+" Formatting selected code
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+
 
 let g:asyncomplete_auto_completeopt = 0
 " set completeopt=menuone,noinsert
@@ -133,8 +137,12 @@ inoremap <silent> <Down> <ESC><Down>
 inoremap jj <Esc>
 
 " Toggle gutter shit
-nnoremap <F5> <esc>:set nonumber<CR>:set nofoldenable<CR>
-nnoremap <F6> <esc>:set number<CR>:set foldenable<CR>
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved
+" set signcolumn=yes
+set signcolumn=no
+nnoremap <F5> <esc>:set nonumber<CR>:set nofoldenable<CR>:IndentBlanklineDisable<CR>:GitGutterBufferDisable<CR>
+nnoremap <F6> <esc>:set number<CR>:set foldenable<CR>:IndentBlanklineEnable<CR>:GitGutterBufferEnable<CR>
 
 " Clear highlighting on ESC in normal
 nnoremap <esc> :noh<return>:cclose<return>:pclose<return><esc>
@@ -145,7 +153,6 @@ let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
 
 " Vim Markdown conceals stuff. Don't.  Also don't fold.
-" set nofoldenable
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_fenced_languages = ['bash=sh', 'shell=sh', 'c++=cpp', 'viml=vim', 'ini=dosini']
@@ -308,10 +315,6 @@ set nowritebackup
 " delays and poor user experience
 set updatetime=300
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved
-set signcolumn=yes
-
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable
 " no select by `"suggest.noselect": true` in your configuration file
@@ -367,10 +370,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming
 nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
