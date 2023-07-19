@@ -8,7 +8,7 @@ running the tests in `Vagrant`. Works on [travis](travis-ci.org) too.
 Extracted from [tmux plugin manager](https://github.com/tmux-plugins/tpm) and
 [tmux-copycat](https://github.com/tmux-plugins/tmux-copycat).
 
-Dependencies: `Vagrant` (no required when running on travis).
+Dependencies: `Vagrant` (not required when running on travis).
 
 ### Setup
 
@@ -108,7 +108,7 @@ project root. To setup continuous integration, just add/enable the project on
   Use `./run_tests` script.
 - You can use `KEEP_RUNNING=true ./run_tests` for faster test running cycle.
   If this case `Vagrant` will keep running even after the tests are done.
-- You can use `VAGRANT_CWD=lib/tmux-text/ vagrant ssh ubuntu` for ssh login to
+- You can use `VAGRANT_CWD=lib/tmux-test/ vagrant ssh ubuntu` for ssh login to
   `Vagrant`.
 
 ### Running `tmux-test` framework tests

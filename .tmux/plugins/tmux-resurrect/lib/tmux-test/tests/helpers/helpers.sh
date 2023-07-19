@@ -8,12 +8,6 @@ TEST_STATUS="success"
 
 # PRIVATE FUNCTIONS
 
-_teardown() {
-	rm -f ~/.tmux.conf
-	rm -rf ~/.tmux/
-	tmux kill-server >/dev/null 2>&1
-}
-
 _clone_the_plugin() {
 	local plugin_path="${HOME}/.tmux/plugins/tmux-plugin-under-test/"
 	rm -rf "$plugin_path"
@@ -28,9 +22,15 @@ _add_plugin_to_tmux_conf() {
 
 # PUBLIC HELPER FUNCTIONS
 
+teardown_helper() {
+	rm -f ~/.tmux.conf
+	rm -rf ~/.tmux/
+	tmux kill-server >/dev/null 2>&1
+}
+
 set_tmux_conf_helper() {
 	> ~/.tmux.conf	# empty tmux.conf file
-	while read -r line; do
+	while read line; do
 		echo "$line" >> ~/.tmux.conf
 	done
 }
@@ -42,7 +42,7 @@ fail_helper() {
 }
 
 exit_helper() {
-	_teardown
+	teardown_helper
 	if [ "$TEST_STATUS" == "fail" ]; then
 		echo "FAIL!"
 		echo
@@ -57,4 +57,12 @@ exit_helper() {
 install_tmux_plugin_under_test_helper() {
 	_clone_the_plugin
 	_add_plugin_to_tmux_conf
+}
+
+run_tests() {
+	# get all the functions starting with 'test_' and invoke them
+	for test in $(compgen -A function | grep "^test_"); do
+		"$test"
+	done
+	exit_helper
 }
