@@ -23,6 +23,9 @@ let g:indent_blankline_enabled = v:true
 
 set background=dark
 
+" Set the python interpreter
+nmap <silent> <leader>i :call CocCommand python.setInterpreter<CR>
+" Coc mappings
 nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <leader>d :call CocAction('doHover')<CR>
@@ -457,3 +460,10 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " Dont care about fold columns
 set foldcolumn=0
+
+if $CONDA_PREFIX == ""
+  let s:current_python_path=$CONDA_PYTHON_EXE
+else
+  let s:current_python_path=$CONDA_PREFIX.'/bin/python'
+endif
+call coc#config('python', {'pythonPath': s:current_python_path})

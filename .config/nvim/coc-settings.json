@@ -1,6 +1,16 @@
 {
-    "javascript.suggest.names": false,
-    "python.linting.enabled": false,
-    "coc.source.OmniSharp.enable": true,
-    "snippets.ultisnips.pythonPrompt": false
+  "javascript.suggest.names": false,
+  "snippets.ultisnips.pythonPrompt": false,
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.jediEnabled": true,
+  "python.pythonPath": "/Users/pkmital/anaconda3/envs/kimchi-pavillion/bin/python",
+  "python.venvPath": "/Users/pkmital/anaconda3/envs",
+  // "python.formatting.provider": "blackd",
+  // "python.formatting.blackdPath": "blackd",
+  "python.condaPath": "/Users/pkmital/anaconda3/bin/conda",
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/Users/pkmital/anaconda3/envs/kimchi-pavillion/bin/black",
+  "inlayHint.enable": false
 }
+
