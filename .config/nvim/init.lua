@@ -34,6 +34,9 @@ require('packer').startup(function()
 
     -- colorscheme
     use {"adisen99/apprentice.nvim", requires = {"rktjmp/lush.nvim"}}
+
+    -- Copilor
+    use 'github/copilot.vim'
 end)
 
 
@@ -49,18 +52,18 @@ require'nvim-treesitter.configs'.setup {
   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
   auto_install = true,
 
-  -- highlight = { enable = true }
+  -- highlight = { enable = true },
 }
 -- Treesitter for folding
--- opt.foldmethod = "expr"
--- opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.api.nvim_create_autocmd({'BufEnter','BufAdd','BufNew','BufNewFile','BufWinEnter'}, {
-  group = vim.api.nvim_create_augroup('TS_FOLD_WORKAROUND', {}),
-  callback = function()
-    vim.opt.foldmethod     = 'expr'
-    vim.opt.foldexpr       = 'nvim_treesitter#foldexpr()'
-  end
-})
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.api.nvim_create_autocmd({'BufEnter','BufAdd','BufNew','BufNewFile','BufWinEnter'}, {
+--   group = vim.api.nvim_create_augroup('TS_FOLD_WORKAROUND', {}),
+--   callback = function()
+--     vim.opt.foldmethod     = 'expr'
+--     vim.opt.foldexpr       = 'nvim_treesitter#foldexpr()'
+--   end
+-- })
 
 
 -- Setup Telescope mappings

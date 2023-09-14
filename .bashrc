@@ -6,6 +6,7 @@ esac
 
 set editor=nvim
 export EDITOR=nvim
+export VISUAL=nvim
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -135,7 +136,8 @@ export CUDA_HOME=/usr/local/cuda
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 set show-mode-in-prompt on
 
-export PATH=/home/parag/dev/google-cloud-sdk/bin:/home/parag/anaconda3/bin:$CUDA_HOME/bin:/usr/local/bin:$PATH
+# export PATH=/home/parag/dev/google-cloud-sdk/bin:/home/parag/anaconda3/bin:$CUDA_HOME/bin:/usr/local/bin:$PATH
+export PATH=/home/parag/dev/google-cloud-sdk/bin:$CUDA_HOME/bin:/usr/local/bin:$PATH
 export MPLBACKEND=Agg
 export DISPLAY=:0
 export MKL_THREADING_LAYER=GNU
@@ -160,9 +162,6 @@ term_title() {
 export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Required for GPU / CUDA / TensorFlow
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
 
 # source ~/.winerc
 # Required for GPU / CUDA / TensorFlow

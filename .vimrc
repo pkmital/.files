@@ -24,7 +24,7 @@ let g:indent_blankline_enabled = v:true
 set background=dark
 
 " Set the python interpreter
-nnoremap <silent> <leader>i :call CocCommand python.setInterpreter<CR>
+" nnoremap <silent> <leader>i :call CocCommand python.setInterpreter<CR>
 " Coc mappings
 nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
@@ -33,13 +33,16 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> cn <Plug>(copilot-next)
+" nmap <silent> cp <Plug>(copilot-previous)
 nnoremap <silent> <space>f :!black %<cr>
 " xmap <leader>f  <Plug>(coc-format-selected)
 " nmap <leader>f  <Plug>(coc-format-selected)
 " Formatting selected code
 " xmap <leader>f  <Plug>(coc-format-selected)
 " nmap <leader>f  <Plug>(coc-format-selected)
-
+imap <silent> <M-]> <Plug>(copilot-next)
+imap <silent> <M-[> <Plug>(copilot-previous)
 
 let g:asyncomplete_auto_completeopt = 0
 " set completeopt=menuone,noinsert

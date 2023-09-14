@@ -1,15 +1,15 @@
 {
   "javascript.suggest.names": false,
-  "snippets.ultisnips.pythonPrompt": false,
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
   "python.linting.mypyEnabled": true,
   "python.linting.flake8Enabled": false,
-  "python.pythonPath": "/home/parag/anaconda3/envs/alignment/bin/python",
+  "python.pythonPath": "/home/parag/anaconda3/envs/audioldm/bin/python",
   "python.venvPath": "/home/parag/anaconda3/envs",
   "python.formatting.provider": "black",
-  "python.formatting.blackPath": "/home/parag/anaconda3/envs/alignment/bin/black",
-  "inlayHint.enable": false,
-  "python.linting.lintOnSave": true
+  "python.formatting.blackPath": "/home/parag/anaconda3/envs/audioldm/bin/black",
+  "python.linting.lintOnSave": true,
+  "pyright.inlayHints.functionReturnTypes": true,
+  "pyright.inlayHints.variableTypes": false
 }
 
