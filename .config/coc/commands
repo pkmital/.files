@@ -1,4 +1,7 @@
+<<<<<<< Updated upstream
 pyright.singleTest
+=======
+>>>>>>> Stashed changes
 pyright.organizeimports
 python.setInterpreter
 workspace.showOutput

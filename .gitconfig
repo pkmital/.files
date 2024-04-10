@@ -25,7 +25,7 @@
 	required = true
 	process = git-lfs filter-process
 [merge]
-	tool = diffconflicts
+	tool = fugitive
 [mergetool "diffconflicts"]
 	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 	trustExitCode = true
@@ -37,3 +37,5 @@
 	tool = vimdiff
 [difftool]
 	prompt = false
+[mergetool "fugitive"]
+	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"

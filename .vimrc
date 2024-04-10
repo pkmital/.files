@@ -4,7 +4,6 @@ execute pathogen#helptags()
 call plug#begin('~/.vim/plugged')
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 Plug 'tpope/vim-unimpaired'
-Plug 'airblade/vim-gitgutter'
 Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -17,6 +16,8 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
+Plug 'rhysd/conflict-marker.vim'
+
 call plug#end()
 
 let g:indent_blankline_enabled = v:true
@@ -138,14 +139,6 @@ inoremap <silent> <Down> <ESC><Down>
 
 " Make jj ESC
 inoremap jj <Esc>
-
-" Toggle gutter shit
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved
-" set signcolumn=yes
-set signcolumn=no
-nnoremap <F5> <esc>:set nonumber<CR>:set nofoldenable<CR>:IndentBlanklineDisable<CR>:GitGutterBufferDisable<CR>
-nnoremap <F6> <esc>:set number<CR>:set foldenable<CR>:IndentBlanklineEnable<CR>:GitGutterBufferEnable<CR>
 
 " Clear highlighting on ESC in normal
 nnoremap <esc> :noh<return>:cclose<return>:pclose<return><esc>
@@ -460,7 +453,12 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" Toggle gutter shit
+nnoremap <F5> <esc>:set nonumber<CR>:set nofoldenable<CR>:set signcolumn=no<CR>:IndentBlanklineDisable<CR>
+nnoremap <F6> <esc>:set number<CR>:set foldenable<CR>:IndentBlanklineEnable<CR>
+
 " Dont care about fold columns
+set signcolumn=no
 set foldcolumn=0
 
 if $CONDA_PREFIX == ""

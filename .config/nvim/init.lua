@@ -12,6 +12,9 @@ require('packer').startup(function()
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
+    -- GitSigns
+    use 'lewis6991/gitsigns.nvim'
+
     -- use {'vim-airline/vim-airline', 'vim-airline/vim-airline-themes'}
     use {
 	  'nvim-lualine/lualine.nvim',
@@ -29,16 +32,68 @@ require('packer').startup(function()
     }
 
     use 'tpope/vim-surround'
-    use {'neoclide/coc.nvim', branch = 'release'}
+    use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
     use 'tpope/vim-commentary'
 
     -- colorscheme
     use {"adisen99/apprentice.nvim", requires = {"rktjmp/lush.nvim"}}
 
-    -- Copilor
+    -- Copilot
     use 'github/copilot.vim'
+
+    -- Better Folds / nvim-ufo
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 end)
 
+
+-- Folding / nvim-ufo
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+require('ufo').setup()
+
+
+-- GitSigns
+require('gitsigns').setup {
+  signs = {
+    add          = { text = '│' },
+    change       = { text = '│' },
+    delete       = { text = '_' },
+    topdelete    = { text = '‾' },
+    changedelete = { text = '~' },
+    untracked    = { text = '┆' },
+  },
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  watch_gitdir = {
+    follow_files = true
+  },
+  attach_to_untracked = true,
+  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+  },
+  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+  sign_priority = 6,
+  update_debounce = 100,
+  status_formatter = nil, -- Use default
+  max_file_length = 40000, -- Disable if file is longer than this (in lines)
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = 'single',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 0,
+    col = 1
+  },
+  yadm = {
+    enable = false
+  },
+}
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
