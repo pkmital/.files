@@ -1,3 +1,6 @@
+ruff.builtin.installServer
+ruff.builtin.installServer
+document.toggleColors
 <<<<<<< Updated upstream
 pyright.singleTest
 =======

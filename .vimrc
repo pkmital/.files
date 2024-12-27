@@ -17,12 +17,9 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
 Plug 'rhysd/conflict-marker.vim'
-
 call plug#end()
 
 let g:indent_blankline_enabled = v:true
-
-set background=dark
 
 " Set the python interpreter
 " nnoremap <silent> <leader>i :call CocCommand python.setInterpreter<CR>
@@ -66,6 +63,34 @@ if &term =~ '256color'
 	" Disable Background Color Erase (BCE) so that color schemes
 	" work properly when Vim is used inside tmux and GNU screen.
 	set t_ut=
+	set t_AU = "\e[58:5:%dm"
+	set t_8u = "\e[58:2:%lu:%lu:%lum"
+	set t_Us = "\e[4:2m"
+	set t_Cs = "\e[4:3m"
+	set t_ds = "\e[4:4m"
+	set t_Ds = "\e[4:5m"
+	set t_Ce = "\e[4:0m"
+	set t_Ts = "\e[9m"
+	set t_Te = "\e[29m"
+	set t_8f = "\e[38:2:%lu:%lu:%lum"
+	set t_8b = "\e[48:2:%lu:%lu:%lum"
+	set t_RF = "\e]10;?\e\\"
+	set t_RB = "\e]11;?\e\\"
+	set t_BE = "\e[?2004h"
+	set t_BD = "\e[?2004l"
+	set t_PS = "\e[200~"
+	set t_PE = "\e[201~"
+	set t_RC = "\e[?12$p"
+	set t_SH = "\e[%d q"
+	set t_RS = "\eP$q q\e\\"
+	set t_SI = "\e[5 q"
+	set t_SR = "\e[3 q"
+	set t_EI = "\e[1 q"
+	set t_VS = "\e[?12l"
+	set t_fe = "\e[?1004h"
+	set t_fd = "\e[?1004l"
+	set t_ST = "\e[22;2t"
+	set t_RT = "\e[23;2t"
 endif
 set termguicolors
 
@@ -128,7 +153,7 @@ let NERDTreeIgnore = ['\.pyc$', '\.ipynb$', '\.png$', '\.jpeg$', '\.jpg$', '\.JP
 
 " Hybrid Line Numbers
 set nu
-" set number relativenumber
+set number relativenumber
 
 "  Yank/Paste clipboard
 set pastetoggle=<F2>
@@ -270,14 +295,6 @@ let g:indentLine_fileTypeExclude = ['json']
 let g:vim_json_syntax_conceal = 0
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
-
-" gitgutter updates
-set updatetime=1
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '>'
-let g:gitgutter_sign_removed = '-'
-let g:gitgutter_sign_removed_first_line = '^'
-let g:gitgutter_sign_modified_removed = '<'
 
 if has('nvim-0.4.0') || has('patch-8.2.0750')
   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -458,7 +475,6 @@ nnoremap <F5> <esc>:set nonumber<CR>:set nofoldenable<CR>:set signcolumn=no<CR>:
 nnoremap <F6> <esc>:set number<CR>:set foldenable<CR>:IndentBlanklineEnable<CR>
 
 " Dont care about fold columns
-set signcolumn=no
 set foldcolumn=0
 
 if $CONDA_PREFIX == ""

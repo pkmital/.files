@@ -124,6 +124,7 @@ alias cpugetavail='cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_go
 alias cpushowcurrent='cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
 alias cpusethigh='echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
 # cat /proc/cpuinfo | grep "^[c]pu MHz" | cut -b 12-18 | paste -sd+ - | bc | awk '{ print $1 / 64 }'"
+alias rsync_bur='rsync -Pavz -e "ssh -J sphere-bastion"'
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases

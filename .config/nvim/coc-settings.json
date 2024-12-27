@@ -6,9 +6,10 @@
   "python.pythonPath": "/home/pkmital/anaconda3/bin/python",
   "python.venvPath": "/home/pkmital/anaconda3/envs",
   "python.formatting.blackPath": "/home/pkmital/anaconda3/bin/black",
+  "python.formatting.ruffPath": "/home/pkmital/anaconda3/bin/ruff",
   "pyright.inlayHints.functionReturnTypes": true,
   "pyright.inlayHints.variableTypes": false,
-  "python.formatting.provider": "black",
+  "python.formatting.provider": "ruff",
   "inlayHint.enable": false,
   "python.linting.lintOnSave": true
 }
