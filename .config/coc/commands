@@ -1,4 +1,10 @@
+ruff.builtin.installServer
+ruff.builtin.installServer
+document.toggleColors
+<<<<<<< Updated upstream
 pyright.singleTest
+=======
+>>>>>>> Stashed changes
 pyright.organizeimports
 python.setInterpreter
 workspace.showOutput

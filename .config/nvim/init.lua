@@ -2,10 +2,9 @@ local vim = vim
 local opt = vim.opt
 
 vim.cmd([[
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath = &runtimepath
-
-source ~/.vimrc
+  set runtimepath^=~/.vim runtimepath+=~/.vim/after
+  let &packpath = &runtimepath
+  source ~/.vimrc
 ]])
 
 require('packer').startup(function()
@@ -30,15 +29,44 @@ require('packer').startup(function()
 
     use 'tpope/vim-surround'
     use {'neoclide/coc.nvim', branch = 'release'}
+    use {'yaegassy/coc-ruff', run = 'yarn install --frozen-lockfile'}
     use 'tpope/vim-commentary'
 
     -- colorscheme
     use {"adisen99/apprentice.nvim", requires = {"rktjmp/lush.nvim"}}
 
-    -- Copilor
+    -- Copilot
     use 'github/copilot.vim'
+
+    -- Better Folds / nvim-ufo
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+
+    -- GitSigns
+    use 'lewis6991/gitsigns.nvim'
+
+    -- TZ True Zen Mode
+    use({"Pocco81/true-zen.nvim",
+      config = function()
+         require("true-zen").setup {
+          -- your config goes here
+          -- or just leave it empty :)
+         }
+      end,
+    })
+
+    -- Nicer error symbols
+    use "folke/trouble.nvim"
+
+    -- Kanagawa colorscheme
+    use 'rebelot/kanagawa.nvim'
 end)
 
+vim.cmd("colorscheme kanagawa-dragon")
+
+-- Folding / nvim-ufo
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+require('ufo').setup()
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
@@ -76,10 +104,14 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>ft', builtin.treesitter, {})
 
--- For coloscheme
--- Load and setup function to choose plugin and language highlights
-require('lualine').setup()
-vim.o.background = "dark" -- or "light" for light mode
+-- -- For coloscheme
+-- -- Load and setup function to choose plugin and language highlights
+require('lualine').setup({
+  options = {
+    icons_enabled = true,
+  }
+})
+-- vim.o.background = "dark" -- or "light" for light mode
 require('lush')(require('apprentice').setup({
   plugins = {
     "buftabline",
@@ -158,3 +190,5 @@ vim.g.airline_powerline_fonts = 1
 vim.g.airline_theme='dark'
 vim.g['airline#extensions#tabline#enabled'] = 1
 vim.g['airline#extensions#tabline#formatter'] = 'unique_tail'
+
+require "git-config"

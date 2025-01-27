@@ -128,6 +128,7 @@ alias blender='/Applications/Blender.app/Contents/MacOS/Blender --python-expr '"
 alias transfer_burbank='rsync -Pavz -e "ssh -J bastion"'
 
 # cat /proc/cpuinfo | grep "^[c]pu MHz" | cut -b 12-18 | paste -sd+ - | bc | awk '{ print $1 / 64 }'"
+alias rsync_bur='rsync -Pavz -e "ssh -J sphere-bastion"'
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
