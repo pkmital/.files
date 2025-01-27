@@ -1,0 +1,13 @@
+{
+  "javascript.suggest.names": false,
+  "snippets.ultisnips.pythonPrompt": false,
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.pythonPath": "/Users/pkmital/anaconda3/envs/kimchi-pavillion/bin/python",
+  "python.venvPath": "/Users/pkmital/anaconda3/envs",
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/Users/pkmital/anaconda3/envs/kimchi-pavillion/bin/black",
+  "inlayHint.enable": false,
+  "python.linting.lintOnSave": true
+}
+

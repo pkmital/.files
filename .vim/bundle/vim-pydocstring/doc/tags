@@ -1,0 +1,12 @@
+g:pydocstring_enable_comment	pydocstring.txt	/*g:pydocstring_enable_comment*
+g:pydocstring_enable_mapping	pydocstring.txt	/*g:pydocstring_enable_mapping*
+g:pydocstring_ignore_args_pattern	pydocstring.txt	/*g:pydocstring_ignore_args_pattern*
+g:pydocstring_templates_dir	pydocstring.txt	/*g:pydocstring_templates_dir*
+pydocstring-vim-contents	pydocstring.txt	/*pydocstring-vim-contents*
+pydocstring-vim-example	pydocstring.txt	/*pydocstring-vim-example*
+pydocstring-vim-install	pydocstring.txt	/*pydocstring-vim-install*
+pydocstring-vim-introduction	pydocstring.txt	/*pydocstring-vim-introduction*
+pydocstring-vim-template	pydocstring.txt	/*pydocstring-vim-template*
+pydocstring-vim-tutorial	pydocstring.txt	/*pydocstring-vim-tutorial*
+pydocstring-vim-variables	pydocstring.txt	/*pydocstring-vim-variables*
+pydocstring.txt	pydocstring.txt	/*pydocstring.txt*

@@ -1,0 +1,23 @@
+{
+  "javascript.suggest.names": false,
+  "snippets.ultisnips.pythonPrompt": false,
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.formatting.provider": "black",
+  "inlayHint.enable": false,
+  "python.linting.lintOnSave": true,
+  "languageserver":
+  {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp", "hpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+    }
+  }
+}
+

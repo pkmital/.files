@@ -1,0 +1,179 @@
+
+
+-- General configurations
+
+-- Equivalent of 'set tabstop=4'
+vim.opt.tabstop = 4
+
+-- Equivalent of 'set shiftwidth=4'
+vim.opt.shiftwidth = 4
+
+-- Equivalent of 'set expandtab'
+vim.opt.expandtab = true
+
+-- Equivalent of 'set autoindent'
+vim.opt.autoindent = true
+
+-- Equivalent of 'set smartindent'
+vim.opt.smartindent = true
+
+-- Equivalent of 'set number'
+vim.opt.number = true
+
+-- Equivalent of 'set cursorline'
+vim.opt.cursorline = true
+
+-- Equivalent of 'set wildmenu'
+vim.opt.wildmenu = true
+
+-- Equivalent of 'set wildmode=list:longest'
+vim.opt.wildmode = {'list', 'longest'}
+
+-- Equivalent of 'set ignorecase'
+vim.opt.ignorecase = true
+
+-- Equivalent of 'set smartcase'
+vim.opt.smartcase = true
+
+-- More settings...
+
+
+-- Key mappings
+
+-- Equivalent of 'nnoremap <C-j> <C-W>j'
+vim.api.nvim_set_keymap('n', '<C-j>', '<C-W>j', {noremap = true, silent = true})
+
+-- Equivalent of 'nnoremap <C-k> <C-W>k'
+vim.api.nvim_set_keymap('n', '<C-k>', '<C-W>k', {noremap = true, silent = true})
+
+-- Equivalent of 'nnoremap <C-h> <C-W>h'
+vim.api.nvim_set_keymap('n', '<C-h>', '<C-W>h', {noremap = true, silent = true})
+
+-- Equivalent of 'nnoremap <C-l> <C-W>l'
+vim.api.nvim_set_keymap('n', '<C-l>', '<C-W>l', {noremap = true, silent = true})
+
+
+-- Plugins
+
+-- packer.nvim needs to be installed first
+require('packer').startup(function()
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
+
+    -- Equivalent of 'Plugin 'scrooloose/nerdtree''
+    use 'preservim/nerdtree'
+
+    -- Equivalent of 'Plugin 'majutsushi/tagbar''
+    use 'preservim/tagbar'
+
+    -- Equivalent of 'Plugin 'vim-airline/vim-airline'' and 'Plugin 'vim-airline/vim-airline-themes''
+    use {'vim-airline/vim-airline', 'vim-airline/vim-airline-themes'}
+
+    -- Equivalent of 'Plugin 'tpope/vim-fugitive''
+    use 'tpope/vim-fugitive'
+
+    -- Telescope settings (replacing ctrlp.vim)
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+            {'nvim-telescope/telescope-fzy-native.nvim', run = 'make' }
+        }
+    }
+
+    -- Equivalent of 'Plugin 'tpope/vim-surround''
+    use 'tpope/vim-surround'
+
+    -- Equivalent of 'Plugin 'ervandew/supertab'' and 'Plugin 'Valloric/YouCompleteMe''
+    -- Using 'neoclide/coc.nvim' instead for completion as it is more modern and powerful
+    use {'neoclide/coc.nvim', branch = 'release'}
+
+    -- Equivalent of 'Plugin 'scrooloose/syntastic''
+    -- Using 'dense-analysis/ale' instead as it is more modern and powerful
+    use 'dense-analysis/ale'
+
+    -- Equivalent of 'Plugin 'tpope/vim-commentary''
+    use 'tpope/vim-commentary'
+end)
+
+
+-- Plugin settings
+
+-- NERDTree settings
+vim.g.NERDTreeWinSize = 25
+vim.g.NERDTreeChDirMode = 2
+vim.g.NERDTreeQuitOnOpen = 1
+
+-- Airline settings
+vim.g.airline_powerline_fonts = 1
+vim.g.airline_theme='dark'
+vim.g['airline#extensions#tabline#enabled'] = 1
+vim.g['airline#extensions#tabline#formatter'] = 'unique_tail'
+
+-- Coc settings (replacing YouCompleteMe)
+vim.g.coc_global_extensions = {
+    'coc-json',
+    'coc-tsserver',
+    'coc-python',
+    'coc-snippets',
+}
+
+-- Telescope settings (replacing ctrlp.vim)
+require('telescope').setup{
+    defaults = {
+        vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case'
+        },
+        prompt_prefix = "> ",
+        selection_caret = "> ",
+        entry_prefix = "  ",
+        initial_mode = "insert",
+        selection_strategy = "reset",
+        sorting_strategy = "ascending",
+        layout_strategy = "horizontal",
+        layout_config = {
+            horizontal = {
+                mirror = false,
+            },
+            vertical = {
+                mirror = false,
+            },
+        },
+        file_sorter = require('telescope.sorters').get_fzy_sorter,
+        file_ignore_patterns = {},
+        generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
+        path_display = {},
+        winblend = 0,
+        border = {},
+        borderchars = {
+            '─',
+            '│',
+            '─',
+            '│',
+            '╭',
+            '╮',
+            '╯',
+            '╰'
+        },
+        color_devicons = true,
+        use_less = true,
+        set_env = {
+            ['COLORTERM'] = 'truecolor',
+        },
+        file_previewer = require('telescope.previewers').vim_buffer_cat.new,
+        grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
+        qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
+    },
+    extensions = {
+        fzy_native = {
+            override_generic_sorter = false,
+            override_file_sorter = true,
+        }
+    }
+}
