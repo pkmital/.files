@@ -123,6 +123,10 @@ alias killmosh='pgrep mosh-server | grep -v $(ps -o ppid --no-headers $$) && xar
 alias cpugetavail='cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors'
 alias cpushowcurrent='cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
 alias cpusethigh='echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
+alias bpy='/Applications/Blender.app/Contents/Resources/4.0/python/bin/python3.10'
+alias blender='/Applications/Blender.app/Contents/MacOS/Blender --python-expr '"'"'__import__("threading").Timer(0, __import__("IPython").embed).start()'"'"''
+alias transfer_burbank='rsync -Pavz -e "ssh -J bastion"'
+
 # cat /proc/cpuinfo | grep "^[c]pu MHz" | cut -b 12-18 | paste -sd+ - | bc | awk '{ print $1 / 64 }'"
 
 if [ -f ~/.bash_aliases ]; then
@@ -187,7 +191,7 @@ _jina() {
   fi
 }
 
-complete -F _jina jina
+# complete -F _jina jina
 
 # session-wise fix
 ulimit -n 4096
@@ -195,10 +199,3 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 # default workspace for Executors
 
 # JINA_CLI_END
-
-
-
-
-
-
-

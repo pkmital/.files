@@ -137,11 +137,11 @@ vim.g.apprentice_hls_highlight = "bright_yellow"
 vim.g.apprentice_italicize_booleans = true
 vim.g.apprentice_tabline_sel = "fg0"
 
-require("indent_blankline").setup {
-    -- for example, context is off by default, use this to turn it on
-    show_current_context = true,
-    show_current_context_start = true,
-}
+-- require("indent_blankline").setup {
+--     -- for example, context is off by default, use this to turn it on
+--     show_current_context = true,
+--     show_current_context_start = true,
+-- }
 
 -- Coc settings (replacing YouCompleteMe)
 vim.g.coc_global_extensions = {
